@@ -1,60 +1,34 @@
-# Swift
-## Ch01_04.상수와 변수    
-* 상수: `let 상수명: 데이터 타입 = 값`   
-    ```swift
-    let a: Int = 100
-    ```
-* 변수: `var 변수명: 데이터 타입 = 값`   
-    ```swift
-    var b: Int = 100
-    ```
+# iOS
+## `UIKit`
+* `Cocoa Touch Framework`: iOS개발환경을 구축하기 위한 최상위 프레임워크   
+  * `Foundation`: 가장 기본적인 데이터 타입, 자료구조, 각종 구조체, 타이머, 네트워크 통신, 파일관리 등 기본적인 프로그램의 중심을 담당   
+  * `UIKit`: 사용자의 인터페이스 관리하며 Event를 처리하는 것이 주 목적(MVC 디자인 패턴을 사용)
+    * 현실 UIKit 구조   
+      * Apple의 MVC 패턴에서는 View와 ViewController가 너무 밀접하며, ViewController가 View의 LisfCycle을 관리하므로 View와 Controller를 분리하기는 어렵다.   
+      * 프로젝트의 규모가 커질수록 컨트롤러가 비대해지고 내부 구조는 복잡하게 되어 유지보수가 힘들어지는 상황이 오게된다.   
+      * 이러한 MVC 패턴의 문제점을 해결하기 위해서 `MVVM`등의 다양한 디자인 패턴을 통해 MVC 디자인 패턴의 단점을 해결   
 
-## Ch01_05.기본 데이터 타입   
-* Int   
-    ```swift
-    var someInt: Int = -100
-    someInt = 100
-    ```
+## `UIView`
+* 화면의 직사각형 영역에 대한 내용을 관리하는 객체
+* 위치와 크기를 갖는 사각형으로서 배경색을 가지고 있으며, 문자나 이미지 등의 컨텐츠를 갖는 것이 가능하다.
 
-## Ch01_10.Optional Binding   
-* 명시적 헤제   
-  * 강제 헤제(`!`: `옵셔널 강제 헤제 연산자`)   
-    ```swift
-    var number: Int? = 3
+## `ViewController`
+* 앱의 근간을 이루는 객체로 모든 앱은 최소 하나 이상의 뷰 컨트롤러를 가지고 있다.
+* 사용자가 화면을 보는것에 대한 관리 기능을 제공
+* `ViewController의 주요 역할`
+  * 데이터 변화에 따라서 View 컨텐츠를 업데이트
+  * View들과 함꼐 사용자 상호작용에 응답
+  * View를 리사이징하고 전체적인 인터페이스의 레이아웃을 관리
+  * 다른 뷰 컨트롤러들과 함께 앰을 구성한다.
 
-    print(number)   /* Optional(3) */
-    print(number!)  /* 3 */
-    ```  
-    > 옵셔널 강제 헤제는 매우 위험한 방법: 값이 nil인 옵셔널을 강제 헤제할 경우 ERROR 발생으로 인한 프로그램 강제 종료   
-    
-  * 비강제 헤제(옵셔널 바인딩)_if문    
-    ```swift 
-    /*
-    if 옵셔널을 추출해서 할당방을 변수나 상수 선언 {
-        코드 블록
-    } else {
-        값 추출이 실패할 경우 실행
-    }
-    */
-    var number: Int? = 3
+## `AutoLayout`
+* 제약 조건(Constraints)을 이용해서 뷰의 위치를 지정하는 것
+* 아이폰의 다양한 해상도 비율에 대항하기 위해 나온 개념
+  * 아이폰의 크기가 다양해지면서 해상도도 달라졌는데 다른 크기의 아이폰에서도 화면을 똑같이 보여주기위해 AutoLayout을 사용한다.
+* AutoLayout을 세로보기 화면뿐만 아니라 가로보기 화면도 지원
+* iOS에서 AutoLayout을 이용한 화면구성은 Storyboard에서 할 수 있다.
 
-    if let result = number {
-        print(result)   /* 3 */
-    } else {
+## `Storyboard`
+* 
 
-    }
-    ```
-  * 비강제 헤제(옵셔널 바인딩)_guard문
-    ```swift
-    func test() {
-        let number: Int? = 5
 
-        guard let result = number else {return}
-        print(result)   /* 5 */
-    }
-
-    test()
-    ``` 
-* 묵시적 헤제   
-  * 컴파일러에 의한 자동 헤제   
-  * 옵셔널의 묵시적 헤제(연산자에 의한 자동 헤제)       
