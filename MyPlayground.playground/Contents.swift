@@ -341,6 +341,139 @@ print(optionalName)  // 포장되어있는 Optional 변수는 일반 변수화 �
 
 //var requiredName: String = optionalName
 
+// --------------------------------------- Ch01_10.Optional Binding --------------------------------------- //
+// Optional 해제 방법
+// 1. 명시적 헤제
+// 1.1 강제 헤제
+// 1.2 비강제 헤제(옵셔널 바인딩)
+// 2. 묵시적 헤제
+// 2.1 컴파일러에 의한 자동 헤제
+// 2.2 옵셔널의 묵시적 헤제
+
+// 명시적 헤제_강제 헤제
+var number05: Int?  = 3
+print(number05)
+print(number05!)  //!: 옵셔널 강제 헤제 연산자 -> 옵셔널을 감싸고 있는 포장지를 강제로 벗길 수 있다.
+
+// 옵서녈을 강제 헤제하는것은 매우 위험한 방법
+// Value = nil 인 옵셔널을 강제 헤제할 경우 프로그램이 종료될 수 있다.
+
+// 명시정 헤제_비강제 헤제: 옵셔널을 안전하게 헤제
+if let result = number05 {
+    print(result)
+}
+
+// 묵시적 헤제_컴파일러에 의한 자동 헤제
+// 옵셔널 값을 비교연산자를 이용하여 다른 값과 비교하면 컴파일러가 자동적으로 옵셔널 값을 해제시켜준다.
+let value: Int? = 6
+if value == 6 {
+    print("value가 6입니다.")
+} else {
+    print("value가 6이 아닙니다.")
+}
+
+// 묵시적 헤제_옵셔널의 묵시적 헤제
+// 묵세적 헤제는 Optional Type이지만 값을 사용할 떄는 자동으로 Optional이 해제된다.
+let string = "12"
+
+// 문자열을 숫자로 변경시: Int(String 변수)
+// String변수에 숫자가 아닌 문자가 들어있을경우 반환값이 nil 이므로 반환타입을 옵셔널 타입으로 지정해주어야 한다.
+//var stringToInt: Int? = Int(string)
+// 이때 옵셔널 변수의 ?를 옵셔널 강제 헤제 연산자 !로 바꾸게되면 묵시적 옵셔널 헤제가 된다.
+var stringToInt: Int! = Int(string)
+print(stringToInt + 1)
+
+// --------------------------------------- Ch01_12.구조체 --------------------------------------- //
+/**
+ struct 구조체 이름 {
+    프로퍼티와 메서드
+ }
+ */
+struct User {
+    var nicName: String
+    var age: Int
+    
+    func info() {
+        print("\(nicName), \(age)")
+    }
+}
+
+var user = User(nicName: "Seong Gyu", age: 29)
+
+user.nicName
+
+user.nicName = "성재"
+user.nicName
+
+user.info()
+
+// --------------------------------------- Ch01_13.클래스 --------------------------------------- //
+/*
+ class 클래스 이름 {
+    프로퍼티와 메서드
+ }
+ */
+class Dog {
+    var name: String = ""
+    var age: Int = 0
+    
+    init(){}
+    
+    func info() {
+        print("\(name), \(age)")
+    }
+}
+
+var dog = Dog()
+dog.name = "coco"
+dog.age = 3
+
+dog.info()
+
+// --------------------------------------- Ch01_13.초기화 구분 init() --------------------------------------- //
+// 클래스 구조체 또는 열거형의 인스턴스를 사용하기 위한 준비 과정
+ /*
+  init(매개변수: 타입, ...) {
+    //프로퍼티 초기화
+    //인스턴스 생성시 필요한 설정을 해주는 코드 작성
+  }
+  */
+class User01 {
+    var nicName: String
+    var age: Int
+    
+    init(nicName: String, age: Int) {
+        self.nicName = nicName
+        self.age = age
+    }
+    
+    init(age: Int) {
+        self.nicName = "성규"
+        self.age = age
+    }
+    
+    deinit {
+        print("deInit User")
+    }
+}
+
+var user01 = User01(nicName: "guntor", age: 23)
+user01.nicName
+user01.age
+
+var user02 = User01(age: 27)
+user02.nicName
+user02.age
+
+var user03: User01? = User01(age: 22)
+user03 = nil
+
+// --------------------------------------- Ch01_14.프로퍼티 --------------------------------------- //
+// 클래스, 구조체 또는 열거형 등에 관련된 값을 뜻한다(인스턴스에 소속된 변수 및 속성)
+// 저장 프로퍼티: 인스턴스의 변수 또는 상수
+// 연산 프로퍼티: 특정 연산을 실행하는 결과값
+// 타입 프로퍼티: 특정 타입에서 사용되는 프로퍼티
+
 
 
 
