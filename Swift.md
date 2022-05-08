@@ -134,11 +134,286 @@
   * Disappeared: 뷰가 화면에서 사라진 상태
 
 * UIViewController는 View가 보여진 상태에 따라 시스템에 의하여 호출되는 Life Cycle Method가 다르다.
+* 개발자들은 적절한 상황에 맞는 기능들을 Life Cycle Method에 작성한다.
 
 * `viewDidLoad()`
   * 뷰 컨트롤러의 모든 뷰들이 메모리에 로드됐을 때 호출
   * 메모리에 처음 로드될 떄 한 번만 호출
   * 보통 딱 한번 호출될 행위들을 이 메소드 안에 정의한다.
-  * 뷰와 관련된 추가적인 초기화 작업, 네트워크 호출
-* 
+  * 뷰와 관련된 추가적인 초기화 작업, 네트워크 호출 등을 viewDidLoad()메서드에 작성한다.
+
+* `viewWillAppear()`
+  * 뷰가 뷰 계층에 추가되고, 화면에 보이기 직전에 매 번 호출
+  * 다른 뷰로 이동했다가 돌아오면 재호출
+  * 뷰와 관련된 추가적인 추기화 작업
+
+* `viewDidAppear()`
+  * 뷰 컨트롤러의 뷰가 뷰 계층에 추가된 후 호출된다.
+  * 뷰를 나타낼 떄 필요한 추가 작업
+  * 애니메이션을 시작하는 작업
+
+* `viewWillDisappear()`
+  * 뷰 컨트롤러의 뷰가 뷰 계층에서 사라지기 전에 호출된다.
+  * 뷰가 생성된 뒤 작업한 내용을 돌리는 작업
+  * 최종적으로 데이터를 저장하는 작업
+
+* `viewDidDisappear()`
+  * 뷰 컨트롤러의 뷰가 뷰 계층에서 사라진 뒤에 호출
+  * 뷰가 사라지는 것과 관련된 추가 작업
+
+## `화면간 데이터 전달`
+* ViewController에서 ViewController를 인스턴스화 해주는 메서드에 전환되는 화면의 View Class Type으로 다운 캐스팅
+  ```Swift
+  class ViewController: UIViewController {
+    ...
+    @IBAction func tapCodePushButton(_ sender: UIButton) {
+      guard let viewController = self.storyboard?.instantiateViewController(identifier: "CodePuthViewController") as?  CodePushViewController else {return}
+    }
+
+    viewController.name = "전성규"
+    self.navigationController?.pushViewController(viewController, animation: true)
+  }
+  ```
+  > 각 Type에 맞는 View Controller Class로 다운캐스팅 하게되면 CodePresentViewController나 CodePushViewController 의 메인 프로퍼티(name)에 접근한 수 있다.   
+  이렇게 되면 다른 화면으로 Push나 Present 되기 전에 메인 프로퍼티에 값을 넘겨주면 전환된 화면으로 데이터를 넘겨줄 수 있다.   
+* 데이터가 잘 전달되었는지 확인하기 위해 전달 받을 ViewController의 viewDidLoad()에 작성
+  ```Swift
+  override viewDidLoad() {
+    super.viewDidLoad()
+    if let name = name {
+      self.nameLable.text = name
+    }
+  }
+  ``` 
+
+## 전환된 화면에서 이전 화면으로 데이터 전달
+* 델리게이트 패턴: 위임자를 갖고있는 객체가 다른 객체에게 자신의 일을 위임하는 형태의 디자인 패턴
+* CodePresentViewController에 프로토콜 정의
+  ```Swift
+  protocol SendDataDelegate: AnyObject {
+    func sendData(name: String)
+  }
+
+  class CodePresentViewController: UIViewController {
+    ...
+    weak var delegate: SendDataDelegate?
+  }
+  ``` 
+  * 델리게이트 패턴을 사용할 때 델리게이트 변수 앞에는 weak 키워드를 붙여야 한다.
+  * weak 키워드가 누락되면 강한 순환참조가 걸려서 메모리 누수가 발생할 수 있다.
+
+## Segueway 화면 전환방식에서 화면간 데이터 전달
+* 전처리 perpare Method: override 하게되면 segueway를 실행하기 직전에 시스템에 의해서 자동으로 호출된다.
+* ViewController 에서 prepare 메서드 설정 
+  ```Swift
+  class ViewController: UIViewController {
+    ...
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+      if let viewController = segue.destination  /* 전환하려는 ViewController의 인스턴스를 가져올 수 있다. */
+        as? SeguePushViewController {ViewController.name = "전성규"}
+    }
+  }
+  ``` 
+* SeguePushViewController에서 전달받은 데이터는 nameLabel에 표시
+  ```Swift
+  class SeguePushViewController: UIViewController {
+    ...
+
+    override func viewDidLoad() {
+      super.viewDidLoad()
+      if let name = name {
+        self.nameLabel.text = name
+        self.nameLabel.sizeToFit()
+      }
+    }
+  }
+  ``` 
+
+---
+
+# Part02_Chapter02_LEDBoard
+1. Root View Controller 
+   1. Storyboard에 Navigation Controller 추가   
+   2. 기본으로 생성된 Navigation Contoller의 Root View Controller 삭제
+   3. Storyboard Entry Point를 Navigation Controller로 설정
+   4. Navigation Controller의 Root View Controller를 설정
+   5. Label을 추가하여 Label이 View의 가운데로 정렬될 수 있도록 제약조건 설정
+
+      - Add New Alignment Constraints
+      - Horizontally in Container Check
+
+      - Verticlly in Container Check   
+
+   6. Label Text 가운데 정렬
+   7. Font Size = 50
+   8. ViewController 안에 있는 Parent ViewController Background Color Balck으로 변경
+   9.  Label Color Yellow로 변경
+   10. Navigation Bar에 Bar Button Item 추가
+   11. Bar Button Item Title = 설정
+</br>
+</br>
+
+1. 설정 구성 
+   1. Storyboard에 새로운 ViewController 추가
+
+   2. 설정 버튼의 Action Segueway를 Show로 설정
+   3. 새로 추가한 ViewController의 Navigation Bar가 생성됐으며 Navigation Bar 중알을 더블클릭하여 Title 읠 설정으로 입력
+   4. 설정 ViewController에 Label, Text Field 추가
+      - `UI Text Field`
+
+        - 텍스트를 편집하기 위한 필드 
+
+        - 사용자가 클릭하면 텍스트를 입력 또는 수정할 수 있다. 
+        - UI Text Field는 여러줄 입력이 불가능하며, 한 줄만 입력 가능하다. 
+        - 여러줄을 사용하려면 `UI Text View`를 사용
+
+   5. Label과 Text Field를 하나로 묶는다.
+      - Lable과 Text Field를 묶어서 우측 하단의 Embed in View 에서 Stack View 설정 
+      - `UI Stack View`  
+       
+        - 여러개의 View를 하나의 세트로 만들어준다.
+         
+        - Stack View 안에 들어가있는 Sub View들은 일정한 규칙에 따라 Stack View안에 배치된다.
+        - Stack Veiw는 Chapter03에서
+         
+   6. Stack View의 간격 조정
+    
+      - Spacing -> 15 
+       
+   7. Stack View 제약 조건 설정
+    
+   8. Text Feild를 Stack View의 가로 넓이게 꽉차게 설정 
+    
+      - 리딩, 트레일링 값을 0으로 설정    
+       
+   9. Label Title 변경 -> 전광판에 표시할 글자
+    
+   10. Text Fiedl Placeholder 변경 -> 전관판에 표시할 글자      
+   11. Label 추가 -> 텍스트 색상 변경 
+   12. Button 3개 추가 -> Stack View 설정
+   13. Label과 버튼들의 Stack View를 Stack View 설정 -> Spacing 15, 제약조건 24, 35, 24
+
+## 에셋 카탈로그를 이용하여 꾸며보기
+* Assets 에서 다양한 resource를 추가하고 관리할 수 있다.
+  * 1x: 24picel
+  * 2x: 48picel
+  * 3x: 72picel
+
+* Storyboard에서 추가 이미지 리소스 버튼을 등록
+  * default button check button을 제외한 나머지 버튼의 Alpha값을 0.2로 설정
+
+## 기능 구현 
+* SettingViewController 추가
+* Storyboard에서 설정화면은 SettingViewController에 연결
+* 모든 화면의 UIObject들을 Outlet변수와 Action 함수 등록
+  * ViewController
+    ```Swift
+    import UIKit
+
+    class ViewController: UIViewController {
+      @IBOutlet weak var contentLabel: UILabel!
+
+      override func viewDidLoad() {
+        super.viewDidLoad()
+        self.contentLabel.textColor = .yellow
+      }
+    }
+    ``` 
+  * SettionViewController
+    ```Swift
+    import UIKit
+
+    class SettingViewController: UIViewController {
+
+      @IBOutlet weak var textField: UITextFiedl!
+      @IBOutlet weak var yellowButton: UIButton!
+      @IBOutlet weak var purpleButton: UIButton!
+      @IBOutlet weak var greenButton: UIButton!
+      @IBOutlet weak var blackButton: UIButton!
+      @IBOutlet weak var blueButton: UIButton!
+      @IBOutlet weak var orangeButton: UIButton!
+
+      override func viewDidLoad() {
+        super.viewDidLoad()
+      }
+
+      /* 하나의 버튼으로 Acction 함수를 만들고 나머지 버튼을 Acction 함수에 드래그 엔 드랍 */
+      /* 
+      * 세개의 버튼이 각각 눌릴 때 마다 tapTextColorButton이 호출된다.
+      * tapTextColorButton에 어떠한 버튼이 눌렸는지 알 수 있는 방법은
+      * Action 함수에서 전달받은 sender 파라미터로 알수 있다.
+      * 버튼을 누르게 되면 sender 파라미터에 선택된 버튼의 인스턴스를 전달하므로 인스턴스를 비교
+      */
+      @IBAction func tapTextColorButton(_ sender: UIButtion) {
+      }
+
+      @IBAction func tapBackgroundColorButton(_ sender: UIButton) {
+
+      }
+
+      @IBAction func tapSaveButton(_ sender: UIButton) {
+
+      }
+    }
+    ``` 
+* 설정 화면에서 선택된 버튼의 Alpha값을 1로 선택되지 않은 버튼의 Alpha값을 0.2로 설정하는 기능 구현
+  * SettionViewController
+    ```Swift
+    import UIKit
+
+    class SettingViewController: UIViewController {
+      ...
+
+      private func changeTextColor(color: UIColor) {
+        self.yellowButton.alpha = color == UIColor.yellow ? 1 : 0.2
+        self.purpleButton.alpha = color == UIColor.purple ? 1 : 0.2
+        self.greenButton.alpha = color == UIColor.green ? 1: 0.2
+      }
+
+      private func changeBackgroundColorButton(color: UIColor) {
+        self.blackButton.alpha = color == UIColor.black ? 1 : 0.2
+        self.blueButton.alpha = color == UIColor.blue ? 1 : 0.2
+        self.orangeButton.alpha = color == UIColor.orange ? 1: 0.2
+      }
+    }
+    ```  
+* tapTextColorButton에 changeTextColor 메서드가 호출되도록 구현
+  * SettingViewControllr
+    ```Swift
+    import UIKit
+
+    class SettingViewController: UIViewController {
+      ...
+
+      @IBAction func tapTextColorBuntto(_ sender: UIButton) {
+        if sender == self.yellowButton {
+          self.changeTextColor(color: .yellow)
+        } else if sender == self.purple {
+          self.changeTextColor(color: .purple) 
+        } else {
+          self.changeTextColor(color: .green)
+        }
+      }
+
+      @IBAction func tapBackgroundColorButton(_ sender: UIButton) {
+        if sender == self.blackButton {
+          self.changetBackgroundColorButton(color: .black)
+        } else if sender == self.bleuButton {
+          self.changetBackgroundColorButton(color: .blue)
+        } else {
+          self.changeBackgroundColorBUtton(color: .orange)
+        }
+      }
+    }
+    ``` 
+
+
+
+   
+
+
+
+
+
+
 
