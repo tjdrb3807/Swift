@@ -27,8 +27,118 @@
   * 아이폰의 크기가 다양해지면서 해상도도 달라졌는데 다른 크기의 아이폰에서도 화면을 똑같이 보여주기위해 AutoLayout을 사용한다.
 * AutoLayout을 세로보기 화면뿐만 아니라 가로보기 화면도 지원
 * iOS에서 AutoLayout을 이용한 화면구성은 Storyboard에서 할 수 있다.
+ 
 
-## `Storyboard`
+## `IBOutlet`
+* 스토리보드에 등록한 UI Object에 접근하여 컨트롤하기 위해 변수에 바인딩한 UI Object 변수
+* 스토리보드에서 UI Object를 드래그하여 Code Class 에 drop
+
+## `Strong, Weak`
+* 메모리 회수 정책을 나타내는 키워드
+* Strong: 다른곳에서 참조하고 있을 경우 메모리에서 제거되지 않는다.(메모리 누수가 발생할 수 있는 여지가 생간다.)
+* Weak: 다른곳에서 참조하고 있더라도 시스템이 임위적으로 메모리에서 제거할 수 있다.
+
+## `IBAction`
+* 동작을 정의하는 함수로서 어떠한 동작을 할 수 있도록 정의하고 연결시켜준다.
+
+## `Content Hugging`
+* UI Framework에서 제공하는 일부 View에는 `컨텐츠 고유 사이즈`라는 개념이 존재한다.
+* UI label과 UI Button과 같은 View의 속성 Text나 Image에 따라 크기가 결정되는 View들이 존재하는데, 이러한 View들은 다른 View들에 걸린 제약에 의해 본래의 Content Size보다 더 늘어나거나 줄어든다.
+* 이때 더 늘어나는 것에 대해 저항하는 제약을 `Content Hugging`
+* 우선순위가 높을수록 크기를 유지한다
+
+## `Compression Resistance`
+* 더 줄어드는 것에 대하 저항하는 제약을 `Conpression Resistance`라 한다.
+* 우선순위가 높을수록 자신의 크기를 유지한다.
+
+## `Content View Controller`
+* 화면을 구성하는 뷰를 직접 구현하고 관련된 이벤트를 처리하는 뷰 컨트롤러
+* 일반적으로 스토리보트 생성시 기본으로 생성되는 View Controller
+
+## `Container View Controller`
+* 하나 이상의 Child View Controller 를 가지고 있다.
+* 하나 이상의 Child View Controller 를 관리하고 레이아웃과 하면을 담당한다.
+* 화면 구성과 이벤트 관리는 Child View Controller 에서 한다.
+* Contaniner View Controller 는 대표적으로 Navigation Controller 와 TabBar Controller가 있다.
+* 여러개의 View Controller를 가지고있는 Container View Controller
+
+## `NavigationController`
+* 계층구조로 구성된 Controller를 순차적으로 부여주는 Container View Controller
+* Navigation Stack이라는 정렬을 사용하고 Child View Controller를 관리한다.
+* 배열의 첫 번째 View Controller는 `Root View Controller`를 의미하며 stack의 최 하단에 위치함을 의미한다.
+* 배열의 마지막 View Controller는 stack의 최 상단에 위치하며 현재 화면에 보여진 View 이다
+* 사용자는 Back 버튼을 클릭하여 최상단 View Controller를 제거할 수 있다.
+
+## `Navigation Stack`
+* LIFO의 Stack구조
+* 예를들어 설정 화면에서 알림을 눌러 알림 화면으로 이동한 경우를 Navigation Stack에 `PUSH`되었다고 정의한다.
+* 알림화면에서 사용자가 BAKC 버튼을 누를경우 최상단에 위치한 View Controller를 제거할 수 있으며, 이를 Navigation Stack에서 `POP`되었다고 정의한다.
+
+
+## `Navigation Bar`
+* Navigation Controller로 구현할 시 화면 상단에 상항 보이는 Bar
+* Root View Controller를 제외한 모든 View Controller에 BACK 버튼이 존재하여 사용자가 계층구조에서 다시 뒤로 갈 수 있도록 기능을 제공한다.
+
+## `화면 전환 방법`
+* 소스코드를 통해 전환하는 방식
+* Stroyboard를 통해 전환하는 방식
+
+* View Controller의 View 위에 다른 View를 가져와서 바꿔치기    
+  >메모리 누수 위험이 있으므로 사용하지 않는 것을 권장 
+* View Controller에서 다은 View Controller를 호출하여 전환하기(`Presentation 방식`)
+  * 기존 View Controller위에 새로운 View Controller의 화면은 덮는 방식
+    ```Swift
+    func present(_ viewControllerToPressent: UIViewController,   // 이동할 화면의 View Controller
+        animation flag: Bool,   // 화면 전환시 애니매이션 효과 추가 여부
+        complition: (() -> Void? = nil))  // complition에 클로저를 정의하면 화면 전환이 완료되는 시점에 맞춰서 클로저가 호출
+    ``` 
+  * 화변 전환은 비동기 방식으로 처리되므로 화면 전환 완료 이후에 처리해야될 코드가 있다다면 complition 크로저 안에 작성한다.  
+  * `dismiss`: present된 화면에서 이전 화면으로 돌아가기 위한 메서드(View Controller의 인스턴스를 인자로 받지 않느다.)
+    ```Swift
+    func dismiss(animation flag: Bool, 
+        complition: (() -> Void? = nil))
+    ``` 
+
+* Navigation Controller를 사용하여 화면 전환하기
+  * View Controller의 화면 전환을 직접 컨트롤 하며, APP에 네이게이션 정보를 표시하는 역할과 Navigation Stack으로 Child View Controller를 관리한다.
+  * LIFO Stack 구조
+    ```Swift
+    /* 새로운 화면을 표시 */
+    func pushViewController(_ viewController: UIViewController,
+        animation: Bool)
+
+    /* 이번 화면으로 전환 */
+    func popViewController(animation: Bool) -> UIViewController?
+    ``` 
+    
+* 화면 전환용 객체 세그웨이(Segueway)를 사용하여 화면 전환하기
+  * 세그웨이: 두개의 View Controller 사이에 연결된 화면 전환 객체
+  * Storyboard를 통해 출발지와 목적지를 직접 지정하는 방식을 세그웨이를 사용한 화면 전환이라 한다.
+  * 세그웨이를 이용하면 별도의 코드 없이 Stroyboard만을 사용하여 화면 전화이 가능
+  * `Action Segueway`: 출발전이 Button 등인 경우
+    * Show
+    * Show Detail
+    * Present Modally
+    * Present As Popover
+    * Custom
+  * `Manual Setgeway`: 출발점이 View Controller 자체인 경우
+
+## `View Controller Life Cycle`
+* UIViewController 객체에는 View 객체를 관리하는 메서드들이 정의되어 있다.
+* 이 메서드들을 각자 자신들이 불러져야할 타이밍일 때 iOS의 시스템에 의하여 자동으로 호출된다.
+
+* 뷰가 보여지는 상황
+  * Appearing: 뷰가 화면에 나타나는 중
+  * Appeared: 뷰가 화면에 나타나는게 완료 된 상태
+  * Disappearing: 뷰가 화면에서 사라지는중
+  * Disappeared: 뷰가 화면에서 사라진 상태
+
+* UIViewController는 View가 보여진 상태에 따라 시스템에 의하여 호출되는 Life Cycle Method가 다르다.
+
+* `viewDidLoad()`
+  * 뷰 컨트롤러의 모든 뷰들이 메모리에 로드됐을 때 호출
+  * 메모리에 처음 로드될 떄 한 번만 호출
+  * 보통 딱 한번 호출될 행위들을 이 메소드 안에 정의한다.
+  * 뷰와 관련된 추가적인 초기화 작업, 네트워크 호출
 * 
-
 
