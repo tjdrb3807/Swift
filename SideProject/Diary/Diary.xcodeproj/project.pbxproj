@@ -16,6 +16,7 @@
 		457EE4CA2829034F00D196CC /* DiaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457EE4C92829034F00D196CC /* DiaryCell.swift */; };
 		457EE4CC282904D800D196CC /* StarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457EE4CB282904D800D196CC /* StarViewController.swift */; };
 		457EE4CE2829077E00D196CC /* StarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457EE4CD2829077E00D196CC /* StarCell.swift */; };
+		457EE4D028290CAD00D196CC /* WriteDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457EE4CF28290CAD00D196CC /* WriteDiaryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		457EE4C92829034F00D196CC /* DiaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryCell.swift; sourceTree = "<group>"; };
 		457EE4CB282904D800D196CC /* StarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarViewController.swift; sourceTree = "<group>"; };
 		457EE4CD2829077E00D196CC /* StarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarCell.swift; sourceTree = "<group>"; };
+		457EE4CF28290CAD00D196CC /* WriteDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteDiaryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				457EE4B72828F98E00D196CC /* SceneDelegate.swift */,
 				457EE4B92828F98E00D196CC /* ViewController.swift */,
 				457EE4BB2828F98E00D196CC /* Main.storyboard */,
+				457EE4CF28290CAD00D196CC /* WriteDiaryViewController.swift */,
 				457EE4CD2829077E00D196CC /* StarCell.swift */,
 				457EE4CB282904D800D196CC /* StarViewController.swift */,
 				457EE4C92829034F00D196CC /* DiaryCell.swift */,
@@ -148,6 +151,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				457EE4BA2828F98E00D196CC /* ViewController.swift in Sources */,
+				457EE4D028290CAD00D196CC /* WriteDiaryViewController.swift in Sources */,
 				457EE4CE2829077E00D196CC /* StarCell.swift in Sources */,
 				457EE4B62828F98E00D196CC /* AppDelegate.swift in Sources */,
 				457EE4B82828F98E00D196CC /* SceneDelegate.swift in Sources */,
