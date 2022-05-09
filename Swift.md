@@ -671,7 +671,34 @@
 
 ---
 # TO DO List 앱
+* 기능 상세
+  * TableView 에 할 일을 추가할 수 있다.
+  * TableView 에서 할 일을 삭제할 수 있다.
+  * TableView 에서 할 일을 재정렬 할 수 있다.
+  * 할 일들을 데이터 저장소에 저장을 하여 앱을 재실행하여도 데이터가 유지되게 한다.
 
+* 활용 기술
+  * UITableView
+  * UIAlterController
+  * UserDefaults
+
+## UITableView
+* `데이터들 목록 형태로 보여 줄 수 있는 가장 기본적인 UI 컴포넌트`
+* UIScrollView를 상속받고 있으므로 스크롤이 가능하여 List형태로 많은 정보를 보여줄 수 있다.
+* 여러 개의 Cell을 가지고 있고 하나의 열와 여러 줄의 행을 지니고 있으며, 수직으로만 스크롤이 가능하다.
+* 섹션을 이용해 행을 그룹화하여 콘텐츠를 좀 더 쉽게 탐색할 수 있다.
+* 섹션의 헤더와 푸터에 View 를 구성하여 추가적인 정보를 표시할 수 있다.
+* `Delegate`: TableView의 동작과 외관을 담당(View가 변경되는 사항을 담당) -> View는 Delegate에 의존하여 View를 Update한다.
+
+## UITableViewDataeSource
+* `TableVies를 생성하고 수정하는데 필요한 정보를 테이블 뷰 객체에 제공`(데이터를 받아 View를 그려주는 역할)
+* UITableView 프로토콜에 정의되어있는 메서드(스크린샷 첨부)
+  * optional로 선언되지 않은 두 가지 메서드는 필수 구현
+    * `numberOfRowsSection()`: 각 섹션에 표시할 행의 개수
+    * `cellForRowAt()`: 특정 index row에 Cell에 대한 정보를 넣어 Cell을 반환하는 메서드
+      * Cell을 보여주고 구성할 데이터를 설정한 후에 해당 메서드에 반환을 하면 구성한 Cell이 TableView에 표시된다.
+## UITableViewDelegate
+* `테이블 뷰의 시각적인 부분을 설정하고, 행의 액션 관리, 엑세서리 뷰 지원 그리고 데이블`
    
 
 
