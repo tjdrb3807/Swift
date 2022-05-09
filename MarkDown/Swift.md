@@ -670,7 +670,7 @@
 * 계산을 담당하는 함수 정의
 
 ---
-# TO DO List 앱
+# To Do List 앱
 * 기능 상세
   * TableView 에 할 일을 추가할 수 있다.
   * TableView 에서 할 일을 삭제할 수 있다.
@@ -688,7 +688,6 @@
 * 여러 개의 Cell을 가지고 있고 하나의 열와 여러 줄의 행을 지니고 있으며, 수직으로만 스크롤이 가능하다.
 * 섹션을 이용해 행을 그룹화하여 콘텐츠를 좀 더 쉽게 탐색할 수 있다.
 * 섹션의 헤더와 푸터에 View 를 구성하여 추가적인 정보를 표시할 수 있다.
-* `Delegate`: TableView의 동작과 외관을 담당(View가 변경되는 사항을 담당) -> View는 Delegate에 의존하여 View를 Update한다.
 
 ## UITableViewDataeSource
 * `TableVies를 생성하고 수정하는데 필요한 정보를 테이블 뷰 객체에 제공`(데이터를 받아 View를 그려주는 역할)
@@ -698,7 +697,64 @@
     * `cellForRowAt()`: 특정 index row에 Cell에 대한 정보를 넣어 Cell을 반환하는 메서드
       * Cell을 보여주고 구성할 데이터를 설정한 후에 해당 메서드에 반환을 하면 구성한 Cell이 TableView에 표시된다.
 ## UITableViewDelegate
-* `테이블 뷰의 시각적인 부분을 설정하고, 행의 액션 관리, 엑세서리 뷰 지원 그리고 데이블`
+* `테이블 뷰의 시각적인 부분을 설정하고, 행의 액션 관리, 엑세서리 뷰 지원 그리고 데이블 뷰의 개별 행 편집을 도와준다.`(View는 Delegate에 의존하여 View를 Update한다.)
+* UITableViewDelegate 프로토콜에 정의되어있는 메서드(스크린샷 첨부)
+* 필수로 구현해야될 메서드는 없다.
+
+## To Do List 화면 구현하기
+* Navigation Controller 추가
+* Navigation Controller의 Default Root Controller Remove
+* Navigation Controller의 Root Controller를 ViewController로 설정
+  * Root Controller에 Navigation Bar 생성 확인
+* Bar Button Item 추가, System Item -> Edit 변경
+* Bar Button Item 추가, System Item -> Add 변경
+* TableView 추가, Leading: 0, Top: 0, Trailing: 0, Buttom: 0 설정
+* TableView의 Prototype Cell -> 1 변경
+* TableViewCell Style -> basic 변경
+
+## 기능 구현
+* Outlet변수 Action함수 등록
+  ```Swift
+  import UIKit
+
+  class ViewController: UIViewController {
+
+      @IBOutlet weak var tableView: UITableView!
+      
+      override func viewDidLoad() {
+          super.viewDidLoad()
+      }
+
+      @IBAction func tapEditButton(_ sender: UIBarButtonItem) {
+      }
+      
+      @IBAction func tapAddButton(_ sender: UIBarButtonItem) {
+      }    
+  }
+  ```
+* Add 버튼을 눌렀을 때 할 일을 등록할 수 있는 Alert이 표시되도록 기능 구현
+  ```Swift
+  @IBAction func tapAddButton(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "할 일 등록", message: nil, preferredStyle: .alert)
+        let registerButton = UIAlertAction(title: "등록", style: .default, handler: { _ in
+            debugPrint("\(alert.textFields?[0].text)")
+        })
+        let cancelButton = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(cancelButton)
+        alert.addAction(registerButton)
+        alert.addTextField(configurationHandler: { textField in
+            textField.placeholder = "할 일을 입력해주세요."
+        })
+        self.present(alert, animated: true, completion: nil)
+  }
+  ```
+  * actionSheet VS alert(스크린샷 첨부)
+
+## UserDefaults
+* Run Time 환경이 동작하면서 App이 실행되는 동안 기본 저장소에 접근해 Data를 기록하고 가져오는 역할을 하는 인터페이스 
+* Key, Value 쌍으로 저장되며, 싱글톤 패턴으로 설계되어 앱 전체에 하나의 인스턴스만 존재한다.
+  
+
    
 
 
