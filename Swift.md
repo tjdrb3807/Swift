@@ -406,8 +406,271 @@
       }
     }
     ``` 
+*  설정 화면에서 설정한 값들을 LED 전광판에 전달해서 적용
+*  이전화면의 데이터를 전달해야 하므로 delegate pattern을 사용
+  * SettingViewController
+    ```Swift
+    import UIKit
 
+    protocol LDEBoardSettingDelegate: AnyObject {
+      func changedSetting(texg: String?, textColor: UIColor, backgroundColor: UIColor)
+    }
 
+    class SettingViewController: UIViewController {
+      weak var delegate: LEDBoardSettingDelegate?
+      var textColor: UIColor = .yellow
+      var backgroundColor: UIColor = .black
+
+       @IBAction func tapTextColorButton(_ sender: UIButton) {
+        if sender == self.yellowButton {
+            self.changeTextColor(color: .yellow)
+            self.textColor = .yellow
+        } else if sender == self.purpleButton {
+            self.changeTextColor(color: .purple)
+            self.textColor = .purple
+        } else {
+            self.changeTextColor(color: .green)
+            self.textColor = .green
+        }
+      }
+    
+      @IBAction func tapBackgroundColorButton(_ sender: UIButton) {
+        if sender == self.blackButton {
+            self.changeBackgroundColor(color: .black)
+            self.backgroundColor = .black
+        } else if sender == self.blueButton {
+            self.changeBackgroundColor(color: .blue)
+            self.backgroundColor = .blue
+        } else {
+            self.changeBackgroundColor(color: .orange)
+            self.backgroundColor = .orange
+        }
+      }
+
+      @IBAction func tapSaveButton(_ sender: UIButton) {
+        self.delegate?.changedSetting(
+            text: textField.text, textColor: self.textColor, backgroundColor: self.backgroundColor)
+        self.navigationController?.popViewController(animated: true)
+      }
+    }
+    ```   
+* SettingViewController에서 넘긴 데이터를 ViewController에서 처리하는 기능 구현 
+  * Segueway로 화면 전환을 했으므로 prepare method 를 override!!
+    ```Swift
+    import UIKit
+
+    class ViewController: UIViewController, LEDBoardSettingDelegate {
+
+        @IBOutlet weak var contentsLabel: UILabel!
+        
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            self.contentsLabel.textColor = .yellow
+        }
+        
+        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if let settingViewController = segue.destination as? SettingViewController {
+                settingViewController.delegate = self
+            }
+        }
+        
+        func changedSetting(text: String?, textColor: UIColor, backgroundColor: UIColor) {
+            if let text = text {
+                self.contentsLabel.text = text
+            }
+            
+            self.contentsLabel.textColor = textColor
+            self.view.backgroundColor = backgroundColor
+        }
+    }
+    ``` 
+* 설정한 값들을 유지하는 기능 적용 
+  * LED 전광판에 설정된 데이터를 다시 설정 화면으로 전달
+  * SettionViewController에 프로퍼티 추가
+    ```Swift
+    import UIKit
+
+    class SettingViewController: UIViewController {
+      ...
+      var ledText:String?
+
+       override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configuerView()
+      }
+
+      private func configuerView() {
+        if let ledText = self.ledText {
+            self.textField.text = ledText
+        }
+        self.changeTextColor(color: self.textColor)
+        self.changeBackgroundColor(color: self.backgroundColor)
+      }
+    }
+    ```
+  * ViewController
+    ```Swift
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let settingViewController = segue.destination as? SettingViewController {
+            settingViewController.delegate = self
+            settingViewController.ledText = self.contentsLabel.text
+            settingViewController.textColor = self.contentsLabel.textColor
+            settingViewController.backgroundColor = self.view.backgroundColor ?? .black
+        }
+    }
+    ```  
+
+---
+# 계산기 앱 만들기
+* 기능 소개
+  * 계산기 키패드 UI를 구성한다.
+  * 계산기를 통해 나누기, 곱하기, 빼기 더하기 연산이 가능하다.
+  * 누적 연산이 가능하다.
+  * AC 버튼을 누르면 계산이 초기화 된다.
+* 활용 기술
+  * UIStackView
+  * IBDesignalbles
+  * IBInspectable
+
+## UIStackView
+* `열 또는 행에 View 들의 묶음을 배치할 수 있는 간소화된 인터페이스`
+* 장점: AutoLayout 제약 조건은 많이 사용하지 않아도 쉽게 UI구성이 가능하다.
+* 속성
+  * `UIStackView Axis`: StackView의 방향을 결정(가로 또는 세로)
+    * Vertical Stack View: Sub View들이 세로 방향으로 추가된다.
+    * Horizontal Stack View: Sub View들이 가로 방향으로 추가된다.
+  * `UIStackView Distribution`: StackVicw 안에 들어가는 Sub View들의 사이즈를 어떻게 분배할지 설정하는 속성
+    * `Fill` Option: Stack View의 방향에 따라 가능한 공간을 모두 체우기 위해서 Sub View들의 사이즈를 재조정
+      * Sub View들의 크기가 Stack View의 크기를 초과하면 각 Sub View의 크기를 감소시킨다.
+      * Sub View들의 크기가 Stack View의 크기에 미달한다면 각 Sub View의 크기를 늘려 Stack View를 채운다
+    * `Fill Equally` Option
+    * `Fill Proportionally` Option: StackView의 방향에 따라 SubView가 갖고있던 크기에 비례하여 공간을 차지
+    * `Equal Spacing` Option: StackView의 방향에 따라서 SubView들 사이의 공간은 균등하게 배치
+    * `Equal Centering` Option: StackView의 방향에 따라서 각 SubView들의 Center와 Center간의 길이를 동일하게 맞춤
+  * `UIStackView Alignment`: StackVicw의 SubView 들을 어떤식으로 정렬할지 결정하는 순서
+    * `Fill` Option: StackViwe의 방향에 따라 SubView들을 꽉 채워 늘린다.
+    * `Leading` Option: Vertical Stack View에서 SubView들을 왼쪽 정렬
+    * `Top` Option: Horizontal Stack View 에서 SubView들을 위쪽 정렬
+    * `First Baseline` Option: SubView들의 First baseline에 맞춰 정렬(Horizontal Stack View 에서만 사용 가능)
+    * `Center` Option: Stack View의 방향에 맞워 SubView들의 Center를 StackView의 Center에 맞춰 정렬
+    * `Trailing` Opiton: Vertical StackView에서 SubView들을 오른쪽 정렬
+    * `Bottom` Option: Horizontal StackView에서 SubView들을 StackVicw의 아래쪽에 맞춰 정렬
+    * `Last Baseline` Option: SubView들의 Last baseline에 맞춰 정렬(Horizontal Stack View 에서만 사용 가능) 
+  * `UIStackView Spacing`: StackView안에 들어가는 뷰들의 간격을 조정하는 속성
+
+## 계산기 UI그리기 
+* Label(Top: 24, Leading: 24, Trailing: 24, Height: 150)
+* UIView(Top: 24, Leading: 24, Trailing: 24, Bottom: 24)
+* Button(Horizontal Stack View 설정)
+* 5개의 Horizontal Stack View를 1개의 Vertical Stack View로 설정
+* Vertical Stack View 제약조건(Top, Leading, Trailing, Bottom => 0)
+* Vertical Stack View의 Bottom Space 제약조건 1000 -> 700
+* 5개의 Horizontal Stack View의 높이를 같게 설정
+* Vertical Stack View의 속성 변경
+  * Alignment: Fill
+  * Distribution: Fill
+  * Spacing: 8
+* 5개의 Horizontal StackView의 속성 변경
+  * Alignmnet: Fill
+  * Distribution: equal spacing
+* 버튼 모양을 정사각형으로 
+  * 16개의 버튼에 Aspect Ratio 제약조건 추가: 해당 View의 가로 세로 비율을 고정시키는 제약조건
+  * Aspect Ratio 비율을 변경(1:1)
+* 최상단 첫 번째 버튼에 제약 조건 설정(두 번쨰 줄의 3번쪠 버튼에 드래그 앤 드랍 -> Tariling)
+
+## 계산기 UI꾸미기
+* Button Title 변경
+* 마지막 줄의 2번빼 버튼 삭제 
+* 첫 번째 버튼의 Aspect Ratio 제약조건 삭제, 세 번쨰 줄의 3번쨰 버튼에 Trailing 정렬
+* 버튼 글자 속성 번경: Style: Medium, Size: 30
+* ViewController의 SuperView Background Color => Black
+* UIView Background Color => Black
+* Label Title = 0, Text Color = White, Text Size = 40, 텍스트 오른쪽 정렬
+* 모든 버튼의 Text Color => White
+* 각 버튼의 Background Color 설정 
+  * AC -> RGB 165, 165, 165
+  * 기호 -> RGB 254, 160, 10
+  * 숫자 -> RGB 51, 51, 51
+* 버튼의 테두리 처리 
+  * `IBInspectable`: 커스텀한 UIView Component에서 Inspect 창을 이용해서 보다 쉽게 속정을 적용
+  * `IBDesignalbles`: 실시간으로 Storyboard에 랜더링
+  * 커스텀할 UI 컴포넌트 생성
+    * name RoundButton
+    * subclass of: UIButton
+      ```Swift
+      import UIKit
+
+      @IBDesignable
+      class RoundButton: UIButton {
+          
+          @IBInspectable var isRound: Bool = false {
+              didSet {
+                  if isRound {
+                      self.layer.cornerRadius = self.frame.height / 2
+                  }
+              }
+          }
+      }
+      ``` 
+
+## 계산기 앱 기능 구현
+* ViewController class에 Outlet변수와 Action함수 정의
+* ViewController에 열거형 선언
+  ```Swift
+  import UIKit
+
+  enum operation {
+      case Add
+      case Subtract
+      case Divide
+      case Multifly
+      case unkonwn
+  }
+  class ViewController: UIViewController {
+  ``` 
+* ViewController에 계산기의 상태 값을 가지고 있는 프로퍼티 설정
+  ```Swift
+    var displayNumber = ""
+    var firstOperand = ""
+    var secondOperand = ""
+    var result = ""
+    var currentOperation: Operation = .unkonwn
+  ```
+* 숫자버튼 기능 구현
+  ```Swift
+  @IBAction func tapNumberButton(_ sender: UIButton) {
+        guard let numberValue = sender.title(for: .normal) else {return}
+        if self.displayNumber.count < 9 {
+            self.displayNumber += numberValue
+            self.numberOutputLabel.text = self.displayNumber
+        }
+    }
+  ```
+* AC버튼 기능 구현
+  ```Swift
+  @IBAction func tapClearButton(_ sender: UIButton) {
+        self.displayNumber = ""
+        self.firstOperand = ""
+        self.secondOperand = ""
+        self.result = ""
+        self.currentOperation = .unkonwn
+        self.numberOutputLabel.text = "0"
+    }
+  ```
+* .버튼 기능 구현
+  ```Swift
+  @IBAction func tapDotButton(_ sender: UIButton) {
+        /* 소추점 포함 9자리까지만 표시될 수 있도록 예외처리 */
+        if self.displayNumber.count < 8, !self.displayNumber.contains(".") {
+            self.displayNumber += self.displayNumber.isEmpty ? "0." : "."
+            self.numberOutputLabel.text = self.displayNumber 
+        }
+    }
+  ``` 
+* 계산을 담당하는 함수 정의
+
+---
+# TO DO List 앱
 
    
 
