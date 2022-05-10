@@ -25,7 +25,14 @@ class ViewController: UIViewController {
         self.configuarCollectionView()
         self.loadDiaryList()
         // 다음 작업: 날짜가 최신 순으로 정렬되는 기능 구현 -> ViewController.loadDiaryList method에 기능 추가 구현
+        // 작업(21)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(editDiaryNotification(_:)),
+                                               name: NSNotification.Name("editDiary"),
+                                               object: nil)
     }
+    // 다음 작업(22): 일기를 즐겨찾기 하면 즐겨찾기 tab에 즐겨찾기한 일기를 CollectionView에 표시되게 하는 기능 구현
+    // 일기 상세화면에서 즐겨찾기 버튼 추가 DiaryDetilVieController 프로퍼티 작성
     
     /* Seguway를 통한 화면 전환이므로 prepare 메서드 작성 */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -98,6 +105,16 @@ class ViewController: UIViewController {
             // 다음 작업: 일기를 등록할때도 최신순으로 정렬되는 기능 구현 -> didSelectRegister 메서드안에 기능 추가
         })
     }
+    
+    @objc func editDiaryNotification(_ notification: Notification) {
+        guard let diary = notification.object as? Diary else {return}
+        guard let row = notification.userInfo?["indexPath.row"] as? Int else {return}
+        self.diaryList[row] = diary
+        self.diaryList = self.diaryList.sorted(by: {  // 날짜 최신순
+            $0.date.compare($1.date) == .orderedDescending
+        })
+        self.collectionView.reloadData()
+    }
 }
 
 extension ViewController: WriteDiaryViewDelegate {
@@ -168,6 +185,12 @@ extension ViewController: DiaryDetailViewDelegate {
         // 다음 작업(11) -> DiaryDetailViewController에서 수정버튼을 누르면 WriteDiaryViewController로 이동
         // WriteDiaryViewController의 storyboard id 값을 WriteDiaryViewController로 설정
         // DiaryDetailViewController.tapEditButton Action함수에 기능 구현
+    }
+    
+    // 작업(27)
+    func didSelectStar(indexPaht: IndexPath, isStar: Bool) {
+        // 파라미터로 전달된 즐겨찾기 여부를 diaryList 에 업데이트
+        self.diaryList[indexPaht.row].isStar = isStar
     }
 }
 

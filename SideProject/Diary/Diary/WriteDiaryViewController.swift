@@ -42,6 +42,10 @@ class WriteDiaryViewController: UIViewController {
         self.configuarDatePicker()
         self.configuarInputFiedl()
         self.confirmButton.isEnabled = false
+        // 작업(16)
+        self.configuarEditMode()
+        // 다음 작업(17) 수정된 내용이 DiaryDetailViewController에도 적용되는 기능 구현
+        // tapComfirmButton에 기능 추가
     }
     
     @IBAction func tapComfirmButton(_ sender: UIBarButtonItem) {
@@ -50,7 +54,34 @@ class WriteDiaryViewController: UIViewController {
         guard let date = self.diaryDate else {return}
         
         let diary = Diary(title: title, contents: contents, date: date, isStar: false)
-        self.delegate?.didSelectRegister(diary: diary)
+        
+        // 기능(17): 수정된 내용을 전달하는 notificationCenter 구현
+        // notificationCenter를 이용해서 수정이 일어나면 notificationCenter에 수정된 diary 객체를 전달하고 notificationCenter를 구독하고 있는 화면에서 수정된 Diary객체를 전달받아 view 에도 수정된 내용이 갱신되게 구현
+        // notificationCenter: 등록된 이벤트가 발생하면 해당 이벤트들에 대한 행동을 취한다
+        // 앱 내에 아무곳에서나 메세지를 던지면 앱 내의 아무곳에서나 이 메세지를 받을 수 있게 해주는 것이다.
+        // eventBus라 생각하면 된다.
+        // event는 Post라는 메서드를 이용해서 이벤트를 전송하고 이벤트를 받으려면 옴저버를 등록해서 Post한 이벤트를 전달받을 수 있다.
+        // Notification Center의 Post 메서드를 이용해서 일기 내용이 수정된 객체를 Notification Center의 Observing 하는 곳에 전달하도록 코드 작성
+        // 수정버튼을 누르면 Post 메서드를 호출하는 기능 구현
+        switch self.diaryEditorMode {
+        case .new:  // 일기를 등록하는 행위를 해야한다.
+            self.delegate?.didSelectRegister(diary: diary)
+        case let .edit(indexPath, _): // 일기를 수정하는 행위를 해야한다.
+            // NotificationCenter의 Post Method를 이용해서 수정된 Diary 객체를 전달하는 기능 구현
+            // nema parameter에는 Notification의 이름을 적어준다.
+            // 이 이름을 가지고 Observer에서 설정한 이름에 Notification Event가 발생하였는지 관찰하게 된다.
+            // object에는 NotificationCenter를 통해 전달할 객체를 넘겨준다
+            // userInfo에는 Notification과 관련된 값을 넘겨준다.
+            NotificationCenter.default.post(
+                name: NSNotification.Name("editDiary"),
+                object: diary,  // 수정된 내용의 diary 객체
+                userInfo: [ // 수정이 발생하면 CollectionView List에도 수정이 일어나야한다.
+                    "indexPath.row": indexPath.row
+                ])  // 수정 버튼을 누르게 되면 NotificationCenter가 "editDiary"라는 Notification Key를 Observing하는 곳에 수정된 diary객체를 전달하게 된다
+        }
+        // 다음 작업(18): 일기장 상세 화면에서 Notification을 Observing하고 수정이 방생했을 떄 수정된 일기장 내용으로 view가 없데이트 되게 기능 구현
+        // DiaryDetailViewController.tapEditButton에 기능 추가
+//        self.delegate?.didSelectRegister(diary: diary) switch문으로 변경
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -84,6 +115,30 @@ class WriteDiaryViewController: UIViewController {
         self.contentTextView.delegate = self
         self.titleTextField.addTarget(self, action: #selector(titleTextFieldDidChange(_:)), for: .editingChanged)
         self.dateTextField.addTarget(self, action: #selector(dateTextFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    // 작업(15)
+    private func configuarEditMode() {
+        switch self.diaryEditorMode {
+            case let .edit(_, diray):
+                self.titleTextField.text = diray.title
+                self.contentTextView.text = diray.contents
+                self.dateTextField.text = self.dateToString(date: diray.date)
+                self.diaryDate = diray.date
+                self.confirmButton.title = "수정"
+            
+        default:
+            break
+        }
+    }
+    // 작업(16) -> viewDidLoad
+    
+    private func dateToString(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy년 MM월 dd일(EEEEE)"
+        formatter.locale = Locale(identifier: "kr_KO")
+        
+        return formatter.string(from: date)
     }
     
     @objc private func datePickerValueDidChange(_ datePicker: UIDatePicker) {
