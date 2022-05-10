@@ -7,6 +7,13 @@
 
 import UIKit
 
+// 작업(12)
+enum DiaryEditorMode {
+    case new
+    case edit(IndexPath, Diary)
+}
+// 다음 작업(13)
+
 protocol WriteDiaryViewDelegate: AnyObject {
     func didSelectRegister(diary: Diary)  // 일기가 작성된 Diary 객체를 전달한다.
 }
@@ -22,6 +29,12 @@ class WriteDiaryViewController: UIViewController {
     private var diaryDate: Date?
     
     weak var delegate: WriteDiaryViewDelegate?
+    
+    // 작업(13)
+    // DiartEditorMode 를 저장하는 프로퍼티 설정
+    var diaryEditorMode: DiaryEditorMode = .new
+    // 다음 작업(14): diaryEditorMode 프로퍼티를 통해서 수정한 다이어리 객체 전달 기능 구현
+    // DiaryDetailViewController.tapEditButton Action 함수에 기능 추가
     
     override func viewDidLoad() {
         super.viewDidLoad()
