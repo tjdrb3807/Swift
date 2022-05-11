@@ -244,4 +244,49 @@
   }
   ``` 
   > 특정 Type으로 지정된 값을 가진 수 있다.   
-  Swift는 다른 프로그래밍 언어와 달리 다양한 ㅌ
+  Swift는 다른 프로그래밍 언어와 달리 다양한 Type을 원시값을 가실 수 있다.
+
+* 초기화된 원시값을 사용하고 싶다면 `rowValue` 라는 Property를 통해 원시값을 가져올 수 있다.
+  ```Swift
+  var direction = CompassPoint.east
+  direction = .west
+
+  switch direction {
+    case .north:
+      print(direction.rowValue)
+
+    case .south:
+      print(direction.rowValue)
+
+    case .east:
+      print(dircetion.rowValue)
+
+    case .west:
+      print(direction.rowValue)    
+  }
+  ``` 
+  > 서   
+* 원시값을 가지고 열어형을 반환
+  ```Swift
+  let direction01 = CompassPoint(rawValue: "남")  // south
+  ``` 
+
+* 연겨형은 연관값을 가질 수 있다.(열거형 내의 항목이 자신과 연관된 값을 가진 수 있다.)
+  ```Swift
+  enum PhoneError {
+    case unknown
+    case batteryLow(String)  /* 연관값을 갖기 위해 항목 옆의 소괄호에 Type을 명시 */
+  }
+
+  let error = PhoneError.batteryLow("배터리가 곧 방전됩니다.")
+
+  /* 연관값을 추출하기 위해 if or switch 문을 사용 */
+  switch error {
+  case .batteryLow(let message):  /* 소괄호 안에 연관값을 넘겨받을 상수 선언 */
+    print(message)
+
+  case .unknown:
+    print("알 수 없는 에러입니다.")
+  }
+  ```  
+  > 다른 항목이 연관값을 갖는다 하여 모두 연관값을 가질 필요는 없다.
