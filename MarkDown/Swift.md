@@ -52,8 +52,6 @@
   value의 값이 nil이라면 else 구문을 실행하여 함수가 return 된다.
 * if let 문법을 사용한 Optional Binding과는 다르게 `guard let 을 사용하면 Optional Binding된 상수를 조건문 범위 밖에서도 사용할 수 있다.`
 
-<br>
-
 ## Protocol
 * 특정 역할을 하기 위한 메서드, 프로퍼티, 기타 요구사항 등의 청사진을 정의한다
 * `구조체, 클레스, 열거형은 프로토콜을 채택`해서 특정 기능을 실행하기 위한 `프로토콜의 요구사항을 실제제로 구현`할 수 있다.
@@ -152,7 +150,98 @@
 ---
 
 <br>
+
+## Extention
+* `기존의 클래스, 구조체, 열거형, 프로토콜에서 새로운 기능을 추가하는 기능`
+* Extention이 Type에 추가할 수 있는 기능
+  * 연산 Type Property / 연산 Instance Property
+  * Type Method / Instance Method
+  * Initializer
+  * 서브 스크립트
+  * 중첩 타입
+  * 특정 Protocol을 준수할 수 있도록 기능 추가
+* 기존에 존재하는 기능을 Orverrid할 수 없다.
+* 연산 Type Property 추가
+
+  ```Swift
+  /*
+  extention SomeType {
+      // 추가 기능
+  }
+  */
+  extension Int {
+      var isEven: Bool { // 짝쉬: true, 홀수: false
+        return self % 2 == 0
+      }
+
+      var isOdd: Bool {
+          return self % 2 == 1
+      }
+  }
+
+  var number = 3
+  number.isOdd   // true
+  number.isEven  // false
+  ``` 
+  > Int Type의 어떠한 Instance에서도 사용이 가능하다.
+
+* Type Method 추가
+  ```Swift
+  extension String {
+      func convertToInt() -> Ing? {
+          return Int(self)
+      }
+  }
+
+  var string = "0"
+  string.convertToInt()  //0
+  ```
+---
+   
 <br>
 
-# Extention
-* 
+## Enum(열거형)
+* `연관성이 있는 값들을 뫃아 놓은 것`
+  ```Swift
+  enum CompassPoint {
+      case north
+      case south
+      case east
+      case west
+  }
+
+  /* 열거형 변수 선언 */
+  var direction = CompassPoint.east
+  direction = .west
+  ```
+  > 각 항목은 그 자체가 고유값이며, 한 줄 나열도 가능하다.   
+  컴파일러가 열거형의 이름을 추론할 수 있으므로 열거형 이름을 생략하고 `.내부 항복 이름`만으로도 사용이 가능하다.
+
+* switch 구문과 함께 사용하는 enum
+  ```Swift
+  switch direction {
+  case .north:
+    print("north")
+
+  case .south:
+    print("south")
+
+  case .east:
+    print("east")
+
+  case .west:
+    print("west")
+  }
+  ```
+  > switch 구문과 함께 사용하면 변수에 들어있는 enum 항목이 어떤 항목인지 비교할 수 있다.   
+* 열겨형의 각 항목은 자체로도 값이지만, 항목의 `원시값`을 갖게 할 수 있다. 
+  ```Swift
+  enum CompassPoint: String {
+      case .north = "북"
+      case .south = "남"
+      case .east = "동"
+      case .west = "서"
+  }
+  ``` 
+  > 특정 Type으로 지정된 값을 가진 수 있다.   
+  Swift는 다른 프로그래밍 언어와 달리 다양한 ㅌ
