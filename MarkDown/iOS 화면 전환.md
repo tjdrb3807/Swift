@@ -8,9 +8,17 @@
 5. Navigation Controller를 사용하여 전환하는 방식
 
 ## 소스코드를 통해 전환하는 방식
-* `self.storyboard?.instantiateViewConroller`: Storyboard에 존재하는 ViewController를 인스턴스화 처리를 해야한다.
+* `self.storyboard?.instantiateViewConroller`: Storyboard에 존재하는 ViewController를 인스턴스화
+ 
    ```Swift
    @IBAction func tapCodePuchButton(_ sender: UIButton) {
        guard let viewController = self.storyboard?.instantiateViewController(identifier: "CodePushViewController") else { return }
    } 
    ```
+   > Storyboard에서 ViewController의 Identity Storyboard Id를 지정하고 해당 식별자를 identifier Parameter에 넘겨준다.   
+   반환 타입이 Optional 이므로 guard문으로 Optional binding   
+
+## Storboard를 통해 전환하는 방식
+* Storyboard에서 Drag And Drop 을 통해 Action Segue 선택
+![](img/img12.png)
+![](img/img13.png)
