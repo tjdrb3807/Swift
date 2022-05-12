@@ -20,10 +20,15 @@
    반환 타입이 Optional 이므로 guard문으로 Optional binding   
 
 ## Storboard를 통해 전환하는 방식
-* Storyboard에서 Drag And Drop 을 통해 Action Segue 선택
+* 화면 전환용 객체 Segueway를 사용하여 화면 전환
+* `Segueway`: 두 개의 View Controller 사이에 연결된 화면 전환 객체
+  > Segueway를 이용하면 별도의 코드 없이 Storyboard에서 화면 전환이 가능하다. 
+* `Action Segueway`: 출발점이 Button 등인 경우
+  * Storyboard에서 Drag And Drop 을 통해 Action Segue 선택
  
     ![](img/img12.png)
     ![](img/img13.png)
+* `Manual Segueway`: 출발점이 View Controller 자체인 경우
 
 ## Presentation 방식
 * `present`: 기존 ViewController위에 새로운 ViewController의 화면을 덮는 방식  
@@ -43,7 +48,7 @@
   ``` 
 
 ## Navigation Controller를 통해 전환하는 방식
-* View Controller의 화면 전환을 직접 컨트롤 하며, App에 Navigation 정로를 표시하는 역할과 Navigation Stack(LIFO으로 Child View Controller를 관리한다.
+* View Controller의 화면 전환을 직접 컨트롤 하며, App에 Navigation 정보를 표시하는 역할과 Navigation Stack(LIFO으로 Child View Controller를 관리한다.
 * `pushViewController`: 새로운 화면을 표시
  
   ``` Swift
