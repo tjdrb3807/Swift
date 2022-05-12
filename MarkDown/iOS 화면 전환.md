@@ -24,7 +24,7 @@
     ![](img/img13.png)
 
 ## Presentation 방식
-* 기존 ViewController위에 새로운 ViewController의 화면을 덮는 방식  
+* `present`: 기존 ViewController위에 새로운 ViewController의 화면을 덮는 방식  
   ```Swift
   func present(_ viewControllerToPresent: UIViewController,
                animated: Bool,
@@ -33,3 +33,11 @@
   * 첫 번째 Parameter에 Presentation 방식으로 이동할 화면의 ViewController를 넘겨준다.
   * animated: 화면 전환시 애니메이션 표화 추가 여부를 Bool 값으로 넘겨준다.
   * compliation: 화면 전환은 비동기 방식으로 처리되므로 화전 전환 이후에 처리히야할 코드가 있다면 compliation 클로저 안에 작성한다.
+
+* `dismiss`: present된 화면에서 이전 화면으로 돌아가기 위한 메서드
+  ```Swift
+  func dissmiss(animated: Bool,
+       complition: (() -> Void? = nil))
+  ``` 
+
+## Navigation Controller를 통해 전환하는 방식
