@@ -20,5 +20,6 @@
 
 ## Storboard를 통해 전환하는 방식
 * Storyboard에서 Drag And Drop 을 통해 Action Segue 선택
+ 
 ![](img/img12.png)
 ![](img/img13.png)
