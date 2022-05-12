@@ -43,3 +43,14 @@
   ``` 
 
 ## Navigation Controller를 통해 전환하는 방식
+* View Controller의 화면 전환을 직접 컨트롤 하며, App에 Navigation 정로를 표시하는 역할과 Navigation Stack(LIFO으로 Child View Controller를 관리한다.
+* `pushViewController`: 새로운 화면을 표시
+ 
+  ``` Swift
+  func pushViewController(_ viewController: UIViewController, animated: Bool)
+  ```
+* `popViewController`: 이전 화면으로 전환
+
+  ```Swift
+  func popViewController(animated: Bool) -> UIViewController?
+  ``` 
