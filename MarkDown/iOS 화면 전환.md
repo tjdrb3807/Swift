@@ -6,3 +6,11 @@
 4. ViewController의 View 위에 다른 View를 가져와서 바꿔치우는 방식
    > 메모리 누수 위헙이 있으므로 사용하지 않는것을 권장.   
 5. Navigation Controller를 사용하여 전환하는 방식
+
+## 소스코드를 통해 전환하는 방식
+* `self.storyboard?.instantiateViewConroller`: Storyboard에 존재하는 ViewController를 인스턴스화 처리를 해야한다.
+   ```Swift
+   @IBAction func tapCodePuchButton(_ sender: UIButton) {
+       guard let viewController = self.storyboard?.instantiateViewController(identifier: "CodePushViewController") else { return }
+   } 
+   ```
