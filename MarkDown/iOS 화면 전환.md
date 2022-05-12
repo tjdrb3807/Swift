@@ -1,4 +1,6 @@
 # iOS 화면 전환 방법
+참고 Project: https://github.com/tjdrb3807/Swift/tree/main/SideProject/ScreenTransactionExample02/ScreenTransactionExample02
+
 1. 소스코드를 통해 전환하는 방식
 2. Storyboard를 통해 전환하는 방식
 3. ViewController에서 다음 ViewController를 호출하여 전환하는 방식(Presentation 방식)
