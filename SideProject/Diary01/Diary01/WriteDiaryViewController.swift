@@ -46,7 +46,20 @@ class WriteDiaryViewController: UIViewController {
         guard let contents = self.contentsTextView.text else { return }
         guard let date = self.diaryDate else { return }
         let diary = Diary(title: title, contents: contents, date: date, isStar: false)
-        self.delegate?.didSelectRegister(diary: diary)
+        
+        // (16)
+        switch self.diaryDditMode {
+        case .new:
+            self.delegate?.didSelectRegister(diary: diary)
+            
+        case let .edit(indexPaht, _):
+            NotificationCenter.default.post(name: NSNotification.Name("editDiary"),
+                                            object: diary,
+                                            userInfo: [
+                                                "indexPath.row": indexPaht.row
+                                            ])
+        }
+//        self.delegate?.didSelectRegister(diary: diary)
         
         self.navigationController?.popViewController(animated: true)
     }
@@ -63,7 +76,7 @@ class WriteDiaryViewController: UIViewController {
     private func configuarDatePicker() {
         self.datePicker.datePickerMode = .date
         self.datePicker.preferredDatePickerStyle = .wheels
-        self.datePicker.locale = Locale(identifier: "ko_Kr")
+        self.datePicker.locale = Locale(identifier: "ko_KR")
         self.datePicker.addTarget(self,
                                   action: #selector(datePickerValueDidChange(_ :)),
                                   for: .valueChanged)
@@ -98,7 +111,7 @@ class WriteDiaryViewController: UIViewController {
             self.contentsTextView.text = diary.contents
             self.dateTextField.text = dateToString(date: diary.date)
             self.diaryDate = diary.date
-            self.editButtonItem.title = "수정"
+            self.confirmButton.title = "수정"
             
         default:
             break
