@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  Diary01
+//  Diary02
 //
-//  Created by 전성규 on 2022/05/12.
+//  Created by 전성규 on 2022/05/13.
 //
 
 import UIKit
