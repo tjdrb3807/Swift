@@ -15,6 +15,8 @@ class StarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configuarCollectionView()
+        self.loadStarDiaryList()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,6 +74,8 @@ extension StarViewController: UICollectionViewDataSource {
     }
 }
 
-extension StarViewController: UICollectionViewFlowLayout {
-    
+extension StarViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlowLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: UIScreen.main.bounds.width - 10, height: 80)
+    }
 }
