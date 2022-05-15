@@ -143,7 +143,7 @@ extension ViewController: UICollectionViewDelegate {
         guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "DiaryDetailViewController") as? DiaryDetailViewController else { return }
         let diary = self.diaryList[indexPath.row]
         viewController.diary = diary
-        viewController.indexPaht = indexPath
+        viewController.indexPath = indexPath
         // (14)
         viewController.delegate = self
         self.navigationController?.pushViewController(viewController, animated: true)

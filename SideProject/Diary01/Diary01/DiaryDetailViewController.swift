@@ -22,7 +22,7 @@ class DiaryDetailViewController: UIViewController {
     weak var delegate: DiaryDetailViewDelegate?
     
     var diary: Diary?
-    var indexPaht: IndexPath?
+    var indexPath: IndexPath?
     var starButton: UIBarButtonItem?
     
     override func viewDidLoad() {
@@ -57,8 +57,8 @@ class DiaryDetailViewController: UIViewController {
         self.diary?.isStar = !isStar
         
         // (21)
-        guard let indexPaht = self.indexPaht else { return }
-        self.delegate?.didSelectStar(indexPath: indexPaht, isStar: self.diary?.isStar ?? false)
+        guard let indexPath = self.indexPath else { return }
+        self.delegate?.didSelectStar(indexPath: indexPath, isStar: self.diary?.isStar ?? false)
     }
     
     private func dateToString(date: Date) -> String {
@@ -71,9 +71,9 @@ class DiaryDetailViewController: UIViewController {
     // (15)
     @IBAction func tapEditButton(_ sender: UIButton) {
         guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "WriteDiaryViewController") as? WriteDiaryViewController else { return }
-        guard let indexPaht = self.indexPaht else { return }
+        guard let indexPath = self.indexPath else { return }
         guard let diary = self.diary else { return }
-        viewController.diaryDditMode = .edit(indexPaht, diary)
+        viewController.diaryDditMode = .edit(indexPath, diary)
         
         // (17): Notification Observing
         NotificationCenter.default.addObserver(self,
@@ -87,7 +87,6 @@ class DiaryDetailViewController: UIViewController {
     @objc func editDiaryNotification(_ notification: Notification) {
         // 수전된 Diary 객체를 받아서 View 에 Update 기능 구현
         guard let diary = notification.object as? Diary else { return }
-        guard let row  = notification.userInfo?["indexPath.row"] as? Int else { return }
         self.diary = diary
         self.configuarView()
     }
@@ -98,7 +97,7 @@ class DiaryDetailViewController: UIViewController {
     
     // (14)
     @IBAction func tapDeleteButton(_ sender: UIButton) {
-        guard let indexPath = self.indexPaht else { return }
+        guard let indexPath = self.indexPath else { return }
         self.delegate?.didSelectDelete(indexPath: indexPath)
         self.navigationController?.popViewController(animated: true)
     }

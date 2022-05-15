@@ -282,7 +282,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="vUu-pA-Uw8"/>
                     <connections>
-                        <outlet property="collectionVIew" destination="mY4-g1-gEX" id="HQF-jd-Nz0"/>
+                        <outlet property="collectionView" destination="mY4-g1-gEX" id="Eb1-hz-702"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kbU-ov-Hyg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

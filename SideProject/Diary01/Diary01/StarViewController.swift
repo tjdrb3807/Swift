@@ -9,24 +9,25 @@ import UIKit
 
 class StarViewController: UIViewController {
 
-    @IBOutlet weak var collectionVIew: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
-    private var diaryList =  [Diary]()
+    private var diaryList = [Diary]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configuarCollectionView()
-        self.loadStarDiaryList()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.loadStarDiaryList()
     }
     
     // UserDefaults에 저장된 diaryList의 즐겨찾기 된 일기만 가져오도록 기능 구현
     private func loadStarDiaryList() {
-        let userDefault = UserDefaults.standard
-        guard let data = userDefault.object(forKey: "diaryList") as? [[String: Any]] else { return }
+        let userDefaults = UserDefaults.standard
+        guard let data = userDefaults.object(forKey: "diaryList") as? [[String: Any]] else { return }
+        // 불러온 데이터를 diaryList에 넣어주는 작업
         self.diaryList = data.compactMap {
             guard let title = $0["title"] as? String  else { return nil }
             guard let contents = $0["contents"] as? String else { return nil }
@@ -39,14 +40,14 @@ class StarViewController: UIViewController {
         }).sorted(by: {
             $0.date.compare($1.date) == .orderedDescending
         })
-        self.collectionVIew.reloadData()
+        self.collectionView.reloadData()
     }
     
     private func configuarCollectionView() {
-        self.collectionVIew.collectionViewLayout = UICollectionViewFlowLayout()
-        self.collectionVIew.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        self.collectionVIew.delegate = self
-        self.collectionVIew.dataSource = self
+        self.collectionView.collectionViewLayout = UICollectionViewFlowLayout()
+        self.collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
     }
     
     private func dateToString(date: Date) -> String {
@@ -74,8 +75,22 @@ extension StarViewController: UICollectionViewDataSource {
     }
 }
 
+extension StarViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize(width: UIScreen.main.bounds.width - 20, height: 80)
+    }
+}
+
+// (26)
 extension StarViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlowLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.width - 10, height: 80)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let viewController = self.storyboard?.instantiateViewController(identifier: "DiaryDetailViewController") as? DiaryDetailViewController else { return }
+        let diary = self.diaryList[indexPath.row]
+        
+        viewController.diary = diary
+        viewController.indexPath = indexPath
+        
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
