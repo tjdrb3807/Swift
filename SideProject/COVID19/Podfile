@@ -1,0 +1,12 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '13.0'
+
+target 'COVID19' do
+  use_frameworks!
+
+  pod 'Alamofire', '~> 5.4'
+  pod 'Charts'
+
+  # Pods for COVID19
+
+end
