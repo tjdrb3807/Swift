@@ -65,6 +65,7 @@ class DiaryDetailViewController: UIViewController {
 //        self.delegate?.didSelectStar(indexPath: indexPath, isStar: self.diary?.isStar ?? false)
         NotificationCenter.default.post(name: NSNotification.Name("starDiary"),
                                         object: [
+                                            "diary": self.diary, // (31) 즐겨찾기가 된 diary객체를 Notification에 전달
                                             "isStar": self.diary?.isStar ?? false,
                                             "indexPath": indexPath
                                         ],

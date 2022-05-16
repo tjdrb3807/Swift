@@ -93,9 +93,22 @@ class StarViewController: UIViewController {
     
     @objc func starDiaryNotificaiton(_ notification: Notification) {
         guard let starDiary = notification.object as? [String: Any] else { return }
+        guard let diary = starDiary["diary"] as? Diary else { return }  // (31)
         guard let isStar = starDiary["isStar"] as? Bool else { return }
-        guard let indexPath = starDiary["indexPath.row"] as? IndexPath else { return }
-        if !isStar {
+        guard let indexPath = starDiary["indexPath"] as? IndexPath else { return }
+//        if !isStar {
+//            self.diaryList.remove(at: indexPath.row)
+//            self.collectionView.deleteItems(at: [indexPath])
+//        }
+        
+        // (31)
+        if isStar {
+            self.diaryList.append(diary)
+            self.diaryList = self.diaryList.sorted(by: {
+                $0.date.compare($1.date) == .orderedDescending
+            })
+            self.collectionView.reloadData()
+        } else {
             self.diaryList.remove(at: indexPath.row)
             self.collectionView.deleteItems(at: [indexPath])
         }
