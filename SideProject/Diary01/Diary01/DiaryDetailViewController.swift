@@ -7,11 +7,13 @@
 
 import UIKit
 
-protocol DiaryDetailViewDelegate: AnyObject {
-    func didSelectDelete(indexPath: IndexPath)
-    // (21)
-    func didSelectStar(indexPath: IndexPath, isStar: Bool)
-}
+// (29)
+//protocol DiaryDetailViewDelegate: AnyObject {
+//    func didSelectDelete(indexPath: IndexPath)
+//    // (21)
+//    // (28)
+////    func didSelectStar(indexPath: IndexPath, isStar: Bool)
+//}
 
 class DiaryDetailViewController: UIViewController {
 
@@ -19,7 +21,8 @@ class DiaryDetailViewController: UIViewController {
     @IBOutlet weak var contentTextView: UITextView!
     @IBOutlet weak var dateLabel: UILabel!
     
-    weak var delegate: DiaryDetailViewDelegate?
+    // (29)
+//    weak var delegate: DiaryDetailViewDelegate?
     
     var diary: Diary?
     var indexPath: IndexPath?
@@ -58,7 +61,14 @@ class DiaryDetailViewController: UIViewController {
         
         // (21)
         guard let indexPath = self.indexPath else { return }
-        self.delegate?.didSelectStar(indexPath: indexPath, isStar: self.diary?.isStar ?? false)
+        // (28)
+//        self.delegate?.didSelectStar(indexPath: indexPath, isStar: self.diary?.isStar ?? false)
+        NotificationCenter.default.post(name: NSNotification.Name("starDiary"),
+                                        object: [
+                                            "isStar": self.diary?.isStar ?? false,
+                                            "indexPath": indexPath
+                                        ],
+                                        userInfo: nil)
     }
     
     private func dateToString(date: Date) -> String {
@@ -98,7 +108,11 @@ class DiaryDetailViewController: UIViewController {
     // (14)
     @IBAction func tapDeleteButton(_ sender: UIButton) {
         guard let indexPath = self.indexPath else { return }
-        self.delegate?.didSelectDelete(indexPath: indexPath)
+        //(29)
+//        self.delegate?.didSelectDelete(indexPath: indexPath)
+        NotificationCenter.default.post(name: NSNotification.Name("deleteDiary"),
+                                        object: indexPath,
+                                        userInfo: nil)
         self.navigationController?.popViewController(animated: true)
     }
 }

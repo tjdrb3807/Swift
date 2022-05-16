@@ -16,12 +16,33 @@ class StarViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configuarCollectionView()
+        
+        // (30)
+        self.loadStarDiaryList()
+        
+        // (31)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(editDiaryNotification(_:)),
+                                               name: NSNotification.Name("editDiary"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(starDiaryNotificaiton(_:)),
+                                               name: NSNotification.Name("starDiary"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(deleteDiaryNotification(_:)),
+                                               name: NSNotification.Name("deleteDiary"),
+                                               object: nil)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.loadStarDiaryList()
-    }
+    // (30)
+    // 데이터가 동기화 되면 데이터를 불러오는 시점을 viewDidLoad에서 할 수 있다.
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        self.loadStarDiaryList()
+//    }
     
     // UserDefaults에 저장된 diaryList의 즐겨찾기 된 일기만 가져오도록 기능 구현
     private func loadStarDiaryList() {
@@ -40,7 +61,8 @@ class StarViewController: UIViewController {
         }).sorted(by: {
             $0.date.compare($1.date) == .orderedDescending
         })
-        self.collectionView.reloadData()
+        // (30)
+//        self.collectionView.reloadData()
     }
     
     private func configuarCollectionView() {
@@ -56,6 +78,33 @@ class StarViewController: UIViewController {
         formatter.locale = Locale(identifier: "ko_KR")
         
         return formatter.string(from: date)
+    }
+    
+    // (30)
+    @objc func editDiaryNotification(_ notification: Notification) {
+        guard let diary = notification.object as? Diary else { return }
+        guard let row = notification.userInfo?["indexPath.row"] as? Int else { return }
+        self.diaryList[row] = diary
+        self.diaryList = self.diaryList.sorted(by: {
+            $0.date.compare($1.date) == .orderedDescending
+        })
+        self.collectionView.reloadData()
+    }
+    
+    @objc func starDiaryNotificaiton(_ notification: Notification) {
+        guard let starDiary = notification.object as? [String: Any] else { return }
+        guard let isStar = starDiary["isStar"] as? Bool else { return }
+        guard let indexPath = starDiary["indexPath.row"] as? IndexPath else { return }
+        if !isStar {
+            self.diaryList.remove(at: indexPath.row)
+            self.collectionView.deleteItems(at: [indexPath])
+        }
+    }
+    
+    @objc func deleteDiaryNotification(_ notification: Notification) {
+        guard let indexPath = notification.object as? IndexPath else { return }
+        self.diaryList.remove(at: indexPath.row)
+        self.collectionView.deleteItems(at: [indexPath])
     }
 }
 
