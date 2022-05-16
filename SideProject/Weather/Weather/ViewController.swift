@@ -21,6 +21,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tapFetchWeatherButton(_ sender: UIButton) {
+        if let cityName = self.cityNameTextField.text {
+            self.getCurrentWeather(cityName: cityName)
+            self.view.endEditing(true)
+        }
     }
     
     func getCurrentWeather(cityName: String) {
@@ -29,9 +33,9 @@ class ViewController: UIViewController {
         session.dataTask(with: url) { data, response, error in
             guard let data = data, error == nil else { return }
             let decoder = JSONDecoder()
-            
-        }
+            guard let weatherInformation = try? decoder.decode(WeatherInformation.self, from: data) else { return }
+            debugPrint(weatherInformation)
+        }.resume()
     }
-    
 }
 
