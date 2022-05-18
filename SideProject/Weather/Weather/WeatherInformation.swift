@@ -1,13 +1,12 @@
 //
-//  WeatherInfor.swift
+//  WeatherInformation.swift
 //  Weather
 //
-//  Created by 전성규 on 2022/05/16.
+//  Created by 전성규 on 2022/05/17.
 //
 
 import Foundation
 
-// (1)
 struct WeatherInformation: Codable {
     let weather: [Weather]
     let temp: Temp
@@ -22,7 +21,7 @@ struct WeatherInformation: Codable {
 
 struct Weather: Codable {
     let id: Int
-    let mian: String
+    let main: String
     let description: String
     let icon: String
 }

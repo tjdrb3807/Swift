@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  Weather
 //
-//  Created by 전성규 on 2022/05/16.
+//  Created by 전성규 on 2022/05/17.
 //
 
 import UIKit
@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var maxTempLabel: UILabel!
     @IBOutlet weak var minTempLabel: UILabel!
+    @IBOutlet weak var weatherStackView: UIStackView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,14 +28,43 @@ class ViewController: UIViewController {
         }
     }
     
+    func configuareView(weatherInformation: WeatherInformation) {
+        debugPrint(weatherInformation)
+        self.cityNameLabel.text = weatherInformation.name
+        if let weather = weatherInformation.weather.first {
+            self.weatherDescriptionLabel.text = weather.description
+        }
+        self.tempLabel.text = "\(Int(weatherInformation.temp.temp - 273.15))°C"
+        self.minTempLabel.text = "최저: \(Int(weatherInformation.temp.minTemp - 273.15))°C"
+        self.maxTempLabel.text = "최고: \(Int(weatherInformation.temp.maxTemp - 273.15))°C"
+    }
+    
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: "error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func getCurrentWeather(cityName: String) {
-        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(cityName)&appid=26fca33ac13e68d4b6bfa911b5e0f22c") else { return }
+        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?id=\(cityName)&appid=26fca33ac13e68d4b6bfa911b5e0f22c") else { return }
         let session = URLSession(configuration: .default)
-        session.dataTask(with: url) { data, response, error in
+        session.dataTask(with: url) { [weak self] data, response, error in
+            let successRange = (200..<300)
             guard let data = data, error == nil else { return }
             let decoder = JSONDecoder()
-            guard let weatherInformation = try? decoder.decode(WeatherInformation.self, from: data) else { return }
-            debugPrint(weatherInformation)
+            if let response = response as? HTTPURLResponse, successRange.contains(response.statusCode) {
+                guard let weatherInformation = try? decoder.decode(WeatherInformation.self, from: data) else { return }
+                DispatchQueue.main.async {
+                    self?.weatherStackView.isHidden = false
+                    self?.configuareView(weatherInformation: weatherInformation)
+                }
+            } else {
+                guard let errorMessage = try? decoder.decode(ErrorMessage.self, from: data) else { return }
+                DispatchQueue.main.async {
+                    self?.showAlert(message: errorMessage.message)
+                }
+            }
+            
         }.resume()
     }
 }
