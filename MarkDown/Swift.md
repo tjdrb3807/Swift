@@ -290,3 +290,41 @@
   }
   ```  
   > 다른 항목이 연관값을 갖는다 하여 모두 연관값을 가질 필요는 없다.
+---
+
+<br>
+
+## 옵셔널 체이닝 
+* 옵셔녈에 속해있는 nil일지도 모르는 Property, Method, SubScription 등을 가져오거나 호출할 때 사용할 수 있는 일련의 과정 
+  ```Swift
+  struct Developer {
+    let name: String
+  }
+
+  struct Company {
+    let nema: String
+    var developer: Developer?
+  }
+
+  var developer = Developter(name: "전성규")
+  var compay = Company(name: "카카오 스타일", developer: nil)
+  print(company.developer)  /* Optional(__lldb_...(name: 전성규)) */
+  print(company.developer.name)  /* name Property에 접근하기 위해서는 developer의 Optional을 벗겨내라는 Error 발생 */
+  ``` 
+* Optional 내부 Property에 접근하기 전에 `?`, `!`를 사용해서 접근 
+  * Optional Chainning ?: 접근한 Property의 값은 항상 Optional로 감싸져 있다.
+    * 값이 nil이 될 수도 있어서 Optional로 감싸져 있는 값이 출력
+    * Optional 값을 벗겨내고 싶다면 Optional Binding 사용 
+  * Optional Chainning !: Optional Property를 강제 UnLapping하여 접근 
+  ```Swift
+  print(company.devleoper?)  /* Optional("전성규") */
+  print(company.devleoper!.name)  /* 전성규 */
+  ```
+  > Optional Bind을 통해 Optional 을 벗겨낼 수도 있지만 Optional Chinnig을 통해 Optional Property에 접근할 수 있다.
+---
+
+<br>
+
+## try-catch
+* Error 처리: 프로그램 내에서 에러가 발생한 상황에 대해 대응하고 이를 복구하는 과정
+* Swift에서는 RunTimeErrorr가 발생한 경우 `발생(throwing)`, `감지(catching)`, `전파(propagating)`, `조작(manipulating)`을 지원하는 1급 Class를 제공한다. 
