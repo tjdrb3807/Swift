@@ -79,6 +79,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="6g0-Wt-7G0"/>
                     <connections>
+                        <outlet property="indicatorView" destination="kzd-MP-Lm4" id="pZh-tK-feF"/>
+                        <outlet property="labelStackView" destination="s5G-ws-3mB" id="dkY-ke-bRC"/>
                         <outlet property="newCaseLabel" destination="4zc-EA-3Jd" id="LT3-zD-yhP"/>
                         <outlet property="pieChartView" destination="pyF-Z0-bId" id="zFt-NW-uSN"/>
                         <outlet property="totalCaseLabel" destination="X3U-oD-vpe" id="3cw-yk-TJf"/>
