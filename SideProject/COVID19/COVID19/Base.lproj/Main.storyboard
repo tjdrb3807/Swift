@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="s5G-ws-3mB">
+                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="s5G-ws-3mB">
                                 <rect key="frame" x="24" y="112" width="366" height="61"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="fbl-Mo-w5F">
@@ -55,10 +55,13 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pyF-Z0-bId" customClass="PieChartView" customModule="Charts">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pyF-Z0-bId" customClass="PieChartView" customModule="Charts">
                                 <rect key="frame" x="24" y="197" width="366" height="641"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="kzd-MP-Lm4">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -67,6 +70,8 @@
                             <constraint firstItem="s5G-ws-3mB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="YGT-Bu-xoc"/>
                             <constraint firstItem="pyF-Z0-bId" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="ZuN-Zt-JjS"/>
                             <constraint firstItem="pyF-Z0-bId" firstAttribute="top" secondItem="s5G-ws-3mB" secondAttribute="bottom" constant="24" id="c4j-Kz-oJp"/>
+                            <constraint firstItem="kzd-MP-Lm4" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="hps-QR-qfi"/>
+                            <constraint firstItem="kzd-MP-Lm4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="k87-IS-cj4"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="pyF-Z0-bId" secondAttribute="trailing" constant="24" id="kDp-7r-aIg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="s5G-ws-3mB" secondAttribute="trailing" constant="24" id="mDa-iQ-gdU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="pyF-Z0-bId" secondAttribute="bottom" constant="24" id="nF2-CX-fCN"/>
