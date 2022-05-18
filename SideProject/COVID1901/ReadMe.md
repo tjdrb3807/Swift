@@ -1,120 +1,112 @@
-# UITabBarController, UICollectionView
-
-
-## UITabBar
-* 앱에서 서로 다른 하위작업, 뷰, 모드 사이의 선택을 할 수 있도록, 탭바에 하나 혹은 하나 이상의 버튼을 보여주는 컨트롤러
  
-    ![](img/img02.png)
-    > 일반적으로 TabBar는 UITabBarController와 함께 사용하지만 App에서 독립적인 컨트롤로 사용할 수 있다.
 
-<br>
 
-## UITabBarController
-* 다중 선택 인터페이스를 관리하는 Container View Controller로, 선택에 따라 어떤 Child View Controller를 보여줄 것인지가 결정
+## NotificaitonCenter
+* `NotificationCenter는 등록된 Event가 발생하면 해당 Event들에 대한 행돌을 취한다.`
+* EventBus라 생각하면 된다.
+  * Event는 `Post` Method를 사용해서 Evnet를 전송한다.
+  * Event를 받으려면 `Observer`를 등록해서 Post한 Event를 전달받을 수 있다.
  
-    ![](img/img03.png) 
 
-  * TabBarController 인터페이스에 있는 각 Tab은 CustomViewController에 연관되어 있으며, 사용자가 특정 Tab을 선택하면 TabBarController는 그에 상응하는 ViewController의 Root View를 표시한다. 
-  * TabBarController는 UIViewController를 상속받는 Class 이므로, View 속성을 갖는다.
-  * 해당 View는 TabBarView와 Custom Content를 포함한 View이다.
-  * TabBarView는 사용자를위해 선택 컨트롤러를 제공하며, 하나 혹은 하나 이상의 Tab Bar Item으로 구성된다.
-
-<br>
-
-## UICollectionView
-* 데이터 항목의 정렬된 컨렉션을 관리하고 커스텀한 레이아웃을 사용해 표시하는 객체
-* TableView 처럼 CrollView를 상속받고 있으며, 다양한 Layout을 보여줄 떄 주로 사용한다.
+ ## 기능 구현시 문제점
+ * 일기장 상세 화면에서 삭제 또는 즐겨찾기가 토글 Delegate를 통해 ViewController의 indexPath와 isStar 여부를 전달하고 있는데 이렇게 되면 ViewController와 1:1로만 데이터를 전달할수 있다.
+ * 일기장 화면에서 일기장 상세 화면으로 이동했을 때는 일기장 화면에만 delegate가 전달 수 있고, 즐겨찾기 화면에서 일기장 상세 화면으로 이동 했을 때는 즐겨찾기 화면에만 Delegate를 전달할 수 있다. 
+ * 결론
+   * deleaget를 전부 걷어네고 NotificationCenter를 이용해서 일기장 상세화면에서 삭제 또는 즐겨찾기 토글 행위가 발생하면, 일기장 화면과 즐겨찬기 화면에 이벤트가 모두 전달되도록 로직 변경
  
-    ![](img/img05.png)
-    > TableView는 List 형태로만 표현이 가능하지만, CollectionView는 List 형태로도 표현이 가능하고 위의 이미지처럼 다양한 형태로 표현이 가능하다.
+---
+# Weater App
+## UI 설계
+1. 도시 검색 전에 날씨 정보를 가리기 위해 부모 Stack View를 Hidden 처리
 
-* CollectionView의 구성
-  
-    ![](img/img06.png) 
-    * `Supplementary View`: 세션에 대한 정보를 표시
-      * Header, Footer
-      * 필수로 구현할 필요는 없다.
-    * `Cell`: CollectionView의 주요 콘텐츠를 표시
-      * CollectionView는 CollectionView Data Source 객체에서 표시할 Cell의 정보를 가져온다.
-    * `Decoration View`: CollectionView에 대한 배경을 꾸밀 때 사용
-      * Layout객체는 Decoration View를 사용하여 Custom한 배경을 구현할 수 있다.
-
-<br>
-
-## CollectionView Layouts
-* CollectionView는 Layout 객체를 통해 CollectionView 내에 Item 배치 및 시각적 스타일을 결정한다.
-* Layout객체가 하는 일은 Cell, Supplementary View, CollectionView의 bound, 내부에 있는 Decoration View의 위치를 결정하고 시각자 상태의 정보를 CollectionView에 제공한다. 
-* UICollectionView에서는 `UICollectionViewFlowLayout`을 사용해서 항목들을 정렬할 수 있으며, 해당 클래스를 사용하게 되면 Cell을 원하는 형태로 정렬할 수 있다.
-* FlowLayout은 Cell의 선형 경로를 배치하며, 최대한 Row를 따라 많은 Cell을 채우다가 현재의 Row에 더이상의 Cell이 들어갈 수 없게 된다면 새로울 Row를 만들어 계속해서 배치해나간다.
-  
-    ![](img/img07.png)
-* UICollectionViewLayout
-* UICollectionViewFlowLayout
-
-<br>
-
-## UICollectionViewFlowLayout
-* 구성 단계
-  1. Flow Layout 객체를 작성하고 컬렉션 뷰에 이를 할당한다.
-  2. Cell의 width, heigth를 정한다.(반드시 지정! 만약 지정하지 않을 경우 값이 0이 되어 표시되지 않느다.)
-  3. 필요한 경우 Cell들 간의 좌우 최소 간격, 위아래 최소 간격을 설정한다.
-  4. 섹션에 header와 footer 가 있으면 이것들의 크기를 지정한다.
-  5. layout의 스크롤 방향을 설정한다. 
-* FlowLayout은 Cell과 Row사이에 간격을 설정할 수 있다.
-  * 여기서 설정하는 간격을 최소 간격으로 배치하는 방법에 따라 지정한 값보다 큰 값으로 설정될 수 있다.
-  * Cell들의 크기가 같으면 최소로 설정한 간격을 지킬 수 있지만, Cell들의 크기가 다르면 실제 간격이 다를 수 있다.
-
-    ![](img/img08.png)
-
-    ![](img/img09.png)
-
-<br>
-
-## UICollectionViewDataSource
-* 컬렉션 뷰로 보여지는 콘텐츠들을 관리하는 객체
-* DataSource를 정의하기 위해서는 UICeollvetionViewDataSource protocol을 준수해야 한다.
-* DataSource의 역학은 CollectionView에 몇개의 섹션이 있는지 특정 섹션에 몇개의 Cell이 존재하는지 특정 섹션이나 셀의 컨텐츠를 보여주기 위해 어떤 View를 사용할 것인가에 대한 정보를 CollectionView에 제공하는것이다.
-* UICollectionViewDataSource protocol의 주요 Method
-
-    ![](img/img10.png)
-    > optional 키워드가 없는 메서드들은 필수 메서드
-
-<br>
-
-## UICollectionViewDelegate
-* 콘텐츠의 표현, 사용자와의 상효작용과 관련된 것들을 관리하는 객체
-
-<br>
-
-## CollectionView 와 관련된 핵심 객체들의 관계
-* CollectionView는 DataSource에서 보여줄 Cell에 대한 정보를 가져온다.
-* Layout 객체에서 해당 Cell에 속하는 위치를 결정한다.
-* 하나 이상의 Layout 속성 객체로 CollectionView에 전송한다.
-* CollectionView는 Layout의 정보를 실제 Cell이나 다른 View들과 결합하여 최종적으로 사용자에게 보여준다.
-![](img/img11.png)
-
-
-## numberOfSection
-* 지정된 Section에 표시할 Cell의 개수
-
-  ```Swift
-  extension ViewController: UICollectionViewDataSouce {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemInSection section: Int) -> Int {
-      return self.dirayList.count
+## 기능 설계
+1. 현재 날씨를 저장할 수 있는 구조체 생성, Codable Protocol 채택 
+    ```Swift
+    struct WeatherInformation: Codable {
+      ...
     }
-  }
-  ```
+    ```
+    * `Codable` Protocol: 자신을 변환하거나 외부 표현으로 변환할 수 있는 타입을 의미한다.
+      * 여기서 외부 표혐이란 JSON과 같은 DATA Type을 의미한다. 
+    * Codable을 Decodable과 Encodable Protocol을 준수하는 타입이다.
+      * 즉 JSON Encoding과 Decoding이 가능하다.
+2. 서버에서 전달받은 날씨 정보 JSON Data를 WeatherInformation Struct Type으로 Decoding 기능 구현
+   * JSON Data 에서 필요한 데이터만 WeatherInformation Struct에 Property 설정
+      * JSON 형태를 변환하고자 하면 기본적으로 JSON Type의 Key와 사용자가 정의한 Struct의 Property이름과 Type이 일치해야 한다. 
+      * Key와 Property의 이름을 다르게 사요하고 싶다면, `CodingKeys`라는 String 타입의 열거형을 선언하여 `CodingKey Protocol을 준수`하게 해야한다.
+3. URLSession을 이용해서 Current Weather API를 호추하여 도시의 날씨 정보를 가져오는 기능 구현
+ 
+   ```Swift
+   func getCurrentWeather(cityName: String) {
+     guard let url = URL(".....") else { return }
+     let session = URLSession(configuration: .default)
+     /* CompletionHandler 클로저 정의 */
+     session.dataTask(with: url) {  data, response, error in  /* 클로저 매개변수 */
 
-## cellForItemAt  ->> ToDoList 앱 다시 듣기
-* CollectionView의 지정된 위치에 표시할 Cell을 요청
-  ```Swift
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPaht) -> UIControllerViewCell {
-    guard let cell = collectionView.dequeueReuseableCell(withResueIdentifier: "DiaryCell", for: indexPath) as? DiaryCell else { return UICollectionViewCell() }
-  }
-  ``` 
-    * dequeueReuseableCell 메서드를 사용해서 Storyboard에서 구성한 CustomCell을 가져온다.
-      * withReuseIdentifier로 전달받은 재사용 식별자를 통해 재상요 가능한 CollectionView는 찾고 이를 반환해준다.
-    * Down Casting 실패시 빈 UICollectionViewCell 반환
+     }
+   }
+   ``` 
+   * dataTask가 API를 호출하고 서버에서 응답이 오면 Completion Handelr 클로저가 호출된다.
+   * data parameter: 서버에서 응답받은 data가 전달
+   * response parameter: HTTP Header 및 상태코드와 같은 응답 Meta Data가 전달
+   * error parameter: 요청을 실패하게 되면 error객체가 전달(`요청에 성공하면 nil이 전달`)
+4. completionHandler 클로저에서 응답받은 JSON 객체를 Decoding 기능 구현
+   * JSONDecoder(): JSON 객체에서 데이터 유형의 인스턴스로 디코딩하는 객체
+     * Decodable, Codable Protocol을 준수하는 사용자 정의 타입으로 변환시켜주는 것 
+5. 서버에서 응답받은 데이터를 View에 표시하는 기능 구현
+   * 네트워크 작업은 별소의 쓰게드에서 진행되며, 응답이 온다해도 자동으로 main 쓰레드로 돌아오지 않기 때문에 Completion 클로저 Handler에서 UI작업을 한다면 main 쓰에드에서 작업을 할 수 있도록 만들어주어야한다.
+6. 잘못된 도시 이름 작성시 서버에서 가져온 error 객체를 알람으로 표시 기능 구현
+   * error message JSON Data를 매핑할 수 있는 구조체 생성
+   * error message를 알람으로 표현   
 
-## didSelectItemAt
-* 특정 Cell이 선택됐음을 알리는 메서드
+--- 
+# COVID19 APP
+## cocoapods
+* Apple pletform에서 개발을 할 때 외무 라이브러리를 관리하기 쉽도록 도와주는 의존성 관리 도구
+* 프로잭트에서 필요한 외부 라이브러리를 cocoapods을 통해 쉽게 관리 및 사용 
+
+## UI설계
+* rootViewController에 PieChart를 표시하는 UIView 추가
+  * class: `PieChartView`
+* 지역의 발생 현황이 표시되도록 UITableViewController를 생성하여 `Static Table View` 설정
+
+## 기능 구현
+1. Server로 부터 응답받은 JSON Data를 Mapping 할 수 있는 구조체 생성 
+   * Covid19_OpenAPI_JSON_Data  
+    
+     <img src="img/img01.png" width=400 height=600>
+3. 
+4. 응답받은 JSON Data를 Mapping할 수 있는 구조체 생성
+5. Alamofire를 이용해서 Server로 부터 Data를 가져올 수 있는 API 호출 기능 구현
+   ```Swift
+   func fetchCovidOverview(
+     completionHandler: (Result<CityCovidOverview, Error>) -> Void
+   ) { }
+   ``` 
+   * API를 요청하고 Server에서 JSON Data를 응답받거나 요청에 실패하였을 때 completion 클로저 Handler를 호출한다.
+   * 해당 클로저를 정의하는 곳에 응답받은 데이터를 전달하는 기능 구현
+   * Result의 첫 번째 제네릭에 요청이 성공하면 CiryCovidOverview 열거형 연관값을 전달받을 수 있도록 
+   * Result의 두 번째 제네릭에 요청이 실패하거나 에러 사항일 경우 Error객체 열거형 연관값으러 전달받을 수 있도록
+   * 반환값은 없다.
+6. Alamofire를 통해 해당 API를 호출
+   * fetchCovidOverview 메서드 파라미터의 클로저를 이스케이피클로저로 선언 
+   * 이스케이피 클로저: 클로저가 함수로 이스케이프 즉 함수로 탈출한다 
+     * 함수의 인자로 클로저가 전달되지만 함수가 반환된 후에도 실행되는것을 의미한다.
+     * 함수의 인자가 함수의 영역을 탈출하여 함수 밖에서도 사용할 수 있는 개념은 기존 변수의 스코프 개념을 완전히 무시한다. 
+       * 함수에서 선언된 로컨 변수가 로컨 변수의 영역을 뛰어넘어 함수 밖에서도 유효하기 때문이다. 
+     * 이스케이핑 클로저를 사용하는 대표적인 예시: 비동기 작업을 하는 경우 CompletionHandler로 이스캐이핑 클로저를 많이 사용한다. 
+       * 보통 네트워크 통신은 비동기로 작업되기 떄문에 .responseData(completionHandler: ) 클로저는 fetchCovidOverview 메서드가 반환된 이후에 호출된다.
+       * 그 이유는 서버에서 데이터를 언제 응답시켜줄지 모르기 때문에 이스케이핑 클로저로 completionHandler를 정의하지 않는다면 서버에서 비동기로 데이터를 응답받기 전 즉 responseData 메서드 파라미터에 정의한 completionHandler 클로저가 호출되기 전에 함수가 종료되서 서버의 응답을 받아도 fetchCovidOverview 메서드에 정의한 completionHandler가 호출되지 않는다. 
+       * 따라서 메서드 내에서 비동기 작업을 하고 비동기 작업의 결과를 completionHandler로 callback 시켜주어야 한다면, 이스케이핑 클로저를 사용하여 함수가 반환된 후에도 실행되게 만들어주어야 한다. 
+7. completionHandler 정의
+   * 순환 참조를 방지하기 위해 클로저 헤드에 [weak self] 캡처리스트 정의
+8. 응답받은 데이터를 PieChart에서 사용
+9. PieChart 구성 메서드 작성
+   * 파이차트에 데이터를 표시하려면 파이차트 데이터 엔트리 라는 객체에 데이터를 추가해야한다. 
+   * 메서드 파라미터에서 전달받을 배열을 파이차트 데이터 엔트리 라는 객체로 매핑시키는 코드 작성
+10. PieChart의 항목을 선택하면 선택한 지역의 코로나 발생 지역의 화면으로 이동하는 기능 구현
+11. ViewController에 로디인디케이터를 추가해서 API를 호출하였을 때 서버에서 응답이 오기 전이라면, 화면에 인디케이터가 표시되게 구현, 서버에서 응답이 온다면, 인디케이터를 숨기고 라벨과 파이차트가 표시되도록 구현
+   * Storyboard에서 Activity indicater View 추가
+   * 파이차트 스텔뷰 hiddin처리
+   * viewDidLoad에서 self.indicator.startAnimation()     
+     * 응답이 오면 Completion Handler 클로저가 호출된다.
