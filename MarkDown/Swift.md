@@ -328,3 +328,14 @@
 ## try-catch
 * Error 처리: 프로그램 내에서 에러가 발생한 상황에 대해 대응하고 이를 복구하는 과정
 * Swift에서는 RunTimeErrorr가 발생한 경우 `발생(throwing)`, `감지(catching)`, `전파(propagating)`, `조작(manipulating)`을 지원하는 1급 Class를 제공한다. 
+
+---
+
+## Result Type
+* Result Type을 적용한 곳에서는 Result 라는 걸 return 해준다.
+  ```Swift
+  func fetchCovidOverview(completionHandler: (Result<CityCovidOverview, Error>) -> Void) {
+    ...
+  }
+  ``` 
+  * Rsult Type을 사용하고자 한다면 성공했을 경우와, 실패했을 경우의 값을 넣어주어야 한다.

@@ -75,9 +75,7 @@
    * Covid19_OpenAPI_JSON_Data  
     
      <img src="img/img01.png" width=400 height=600>
-3. 
-4. 응답받은 JSON Data를 Mapping할 수 있는 구조체 생성
-5. Alamofire를 이용해서 Server로 부터 Data를 가져올 수 있는 API 호출 기능 구현
+2. Alamofire를 이용해서 Server로 부터 Data를 가져올 수 있는 API 호출 기능 구현
    ```Swift
    func fetchCovidOverview(
      completionHandler: (Result<CityCovidOverview, Error>) -> Void
@@ -88,7 +86,7 @@
    * Result의 첫 번째 제네릭에 요청이 성공하면 CiryCovidOverview 열거형 연관값을 전달받을 수 있도록 
    * Result의 두 번째 제네릭에 요청이 실패하거나 에러 사항일 경우 Error객체 열거형 연관값으러 전달받을 수 있도록
    * 반환값은 없다.
-6. Alamofire를 통해 해당 API를 호출
+3. Alamofire를 통해 해당 API를 호출
    * fetchCovidOverview 메서드 파라미터의 클로저를 이스케이피클로저로 선언 
    * 이스케이피 클로저: 클로저가 함수로 이스케이프 즉 함수로 탈출한다 
      * 함수의 인자로 클로저가 전달되지만 함수가 반환된 후에도 실행되는것을 의미한다.
@@ -98,14 +96,14 @@
        * 보통 네트워크 통신은 비동기로 작업되기 떄문에 .responseData(completionHandler: ) 클로저는 fetchCovidOverview 메서드가 반환된 이후에 호출된다.
        * 그 이유는 서버에서 데이터를 언제 응답시켜줄지 모르기 때문에 이스케이핑 클로저로 completionHandler를 정의하지 않는다면 서버에서 비동기로 데이터를 응답받기 전 즉 responseData 메서드 파라미터에 정의한 completionHandler 클로저가 호출되기 전에 함수가 종료되서 서버의 응답을 받아도 fetchCovidOverview 메서드에 정의한 completionHandler가 호출되지 않는다. 
        * 따라서 메서드 내에서 비동기 작업을 하고 비동기 작업의 결과를 completionHandler로 callback 시켜주어야 한다면, 이스케이핑 클로저를 사용하여 함수가 반환된 후에도 실행되게 만들어주어야 한다. 
-7. completionHandler 정의
+4. completionHandler 정의
    * 순환 참조를 방지하기 위해 클로저 헤드에 [weak self] 캡처리스트 정의
-8. 응답받은 데이터를 PieChart에서 사용
-9. PieChart 구성 메서드 작성
+5. 응답받은 데이터를 PieChart에서 사용
+6. PieChart 구성 메서드 작성
    * 파이차트에 데이터를 표시하려면 파이차트 데이터 엔트리 라는 객체에 데이터를 추가해야한다. 
    * 메서드 파라미터에서 전달받을 배열을 파이차트 데이터 엔트리 라는 객체로 매핑시키는 코드 작성
-10. PieChart의 항목을 선택하면 선택한 지역의 코로나 발생 지역의 화면으로 이동하는 기능 구현
-11. ViewController에 로디인디케이터를 추가해서 API를 호출하였을 때 서버에서 응답이 오기 전이라면, 화면에 인디케이터가 표시되게 구현, 서버에서 응답이 온다면, 인디케이터를 숨기고 라벨과 파이차트가 표시되도록 구현
+7.  PieChart의 항목을 선택하면 선택한 지역의 코로나 발생 지역의 화면으로 이동하는 기능 구현
+8.  ViewController에 로디인디케이터를 추가해서 API를 호출하였을 때 서버에서 응답이 오기 전이라면, 화면에 인디케이터가 표시되게 구현, 서버에서 응답이 온다면, 인디케이터를 숨기고 라벨과 파이차트가 표시되도록 구현
    * Storyboard에서 Activity indicater View 추가
    * 파이차트 스텔뷰 hiddin처리
    * viewDidLoad에서 self.indicator.startAnimation()     

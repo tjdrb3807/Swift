@@ -17,5 +17,28 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    func fetchCovidOverview(completionHandler: (Result<CityCovidOverview, Error>) -> Void) {
+        let url = "https://api.corona-19.kr/korea/country/new/"
+        let param = [
+            "serviceKey": "PZNSIl9uXe5siyA3aHfcp68YDU2BbGnTt"
+        ]
+        
+        AF.request(url, method: .get, parameters: param)
+            .response(completionHandler: { response in
+                switch.response.result {
+                case let .success(data):
+                    do {
+                        let decoder = JSONDecoder()
+                        decoder.decode(CityCovidOverview.self, from: data)
+                        completionHandler(.success(result))
+                    } catch {
+                        completionHandler(.failure(error))
+                    }
+                case let .failure(error):
+                    completionHandler(.failure(error))
+                }
+            })
+    }
 }
 
