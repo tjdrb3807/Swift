@@ -14,6 +14,7 @@
 		4591BE36283604FC0010542D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4591BE34283604FC0010542D /* LaunchScreen.storyboard */; };
 		4591BE3E283607D30010542D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4591BE3D283607D30010542D /* LoginViewController.swift */; };
 		4591BE40283618DA0010542D /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4591BE3F283618DA0010542D /* EmailViewController.swift */; };
+		4591BE422836379B0010542D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4591BE412836379B0010542D /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		4591BE37283604FC0010542D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4591BE3D283607D30010542D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4591BE3F283618DA0010542D /* EmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
+		4591BE412836379B0010542D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				4591BE37283604FC0010542D /* Info.plist */,
 				4591BE3D283607D30010542D /* LoginViewController.swift */,
 				4591BE3F283618DA0010542D /* EmailViewController.swift */,
+				4591BE412836379B0010542D /* MainViewController.swift */,
 			);
 			path = SpotifyStyleLoginSampleApp;
 			sourceTree = "<group>";
@@ -145,6 +148,7 @@
 				4591BE2A283604FC0010542D /* AppDelegate.swift in Sources */,
 				4591BE2C283604FC0010542D /* SceneDelegate.swift in Sources */,
 				4591BE40283618DA0010542D /* EmailViewController.swift in Sources */,
+				4591BE422836379B0010542D /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

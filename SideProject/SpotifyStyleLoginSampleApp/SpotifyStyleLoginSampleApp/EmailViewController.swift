@@ -16,8 +16,17 @@ class EmailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         nextButton.layer.cornerRadius = 30
         nextButton.isEnabled = false
+        
+        //(기능 01)
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        
+        //(기능 02)
+        emailTextField.becomeFirstResponder()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -26,5 +35,22 @@ class EmailViewController: UIViewController {
         navigationController?.navigationBar.isHidden = false
     }
     @IBAction func tapNextButton(_ sender: UIButton) {
+    }
+}
+
+extension EmailViewController: UITextFieldDelegate {
+    //(기능 01_01)
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        
+        return false
+    }
+    
+    //(기능 02_02_
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let isEmailEmpty = emailTextField.text == ""
+        let isPasswordEmpty = passwordTextField.text == ""
+        
+        nextButton.isEnabled = !isEmailEmpty && isPasswordEmpty
     }
 }

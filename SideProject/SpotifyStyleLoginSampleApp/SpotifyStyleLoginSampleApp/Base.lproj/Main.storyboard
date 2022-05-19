@@ -221,6 +221,49 @@
             </objects>
             <point key="canvasLocation" x="1113" y="123"/>
         </scene>
+        <!--Main View Controller-->
+        <scene sceneID="Xp7-cX-Q84">
+            <objects>
+                <viewController storyboardIdentifier="MainViewController" id="7I5-7Z-eoc" customClass="MainViewController" customModule="SpotifyStyleLoginSampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1TS-X4-zxL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="환영합니다." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MgC-Qs-y99">
+                                <rect key="frame" x="149.5" y="438" width="115" height="30"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vn8-MI-3aT">
+                                <rect key="frame" x="175.5" y="488" width="63" height="34"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="로그아웃">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="tapLogoutButton:" destination="7I5-7Z-eoc" eventType="touchUpInside" id="Zcu-Pc-lFO"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="QO7-cY-CBi"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="MgC-Qs-y99" firstAttribute="centerX" secondItem="QO7-cY-CBi" secondAttribute="centerX" id="RzV-1m-qLN"/>
+                            <constraint firstItem="Vn8-MI-3aT" firstAttribute="centerX" secondItem="QO7-cY-CBi" secondAttribute="centerX" id="aUa-bF-kal"/>
+                            <constraint firstItem="MgC-Qs-y99" firstAttribute="centerY" secondItem="QO7-cY-CBi" secondAttribute="centerY" id="odI-sL-eBB"/>
+                            <constraint firstItem="Vn8-MI-3aT" firstAttribute="top" secondItem="MgC-Qs-y99" secondAttribute="bottom" constant="20" id="sn6-Ec-0Vi"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="welcomeLabel" destination="MgC-Qs-y99" id="L0U-Kc-6EI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Me4-Y1-khC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1906" y="123"/>
+        </scene>
     </scenes>
     <resources>
         <image name="logo_apple" width="33.333332061767578" height="33.333332061767578"/>

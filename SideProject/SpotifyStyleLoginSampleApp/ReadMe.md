@@ -80,8 +80,19 @@
    * 버튼 Layer Border 설정
      * EmailViewController.viewDidLoad()에 기능 구현
    * 버튼 비활성화 기능 구현
+10. MainViewController 생성 
+   * Navigation Bar 삭제 기능 구현
+   * Pop Gesture 삭제 기능 구현
+   * tapLogoutButton에 popRootViewController 기능 구현       
 
+---
 
+## 기능 구현
+1. Firebase Authentication에 전달할 emailTextField와 passwordTextField에 입력된 Text 값을 받아오기 위한 TextFiledDelegate 설정
+   * textFieldShouldReturn(): email, password 입력이 끝난 후 Return Button 이 눌렸을 때 Keyboard가 내려가는 기능 구현
+   * textFiledDidEndEditing: emailTextField, passwordTextField에 값이 채워졌을 때 nextButton 활성화 기능 구현
+     * 두 Text Field에 모두 Text 값이 있을 때 활성화 조건
+2. EmailViewController에 처음 들어왔을 때 커서가 emailTextFiled에 위치하도록 기능 구현
 
 
 ## OAuth
