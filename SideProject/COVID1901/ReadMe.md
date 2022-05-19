@@ -75,13 +75,17 @@
    * Covid19_OpenAPI_JSON_Data  
     
      <img src="img/img01.png" width=400 height=600>
+
 2. Alamofire를 이용해서 Server로 부터 Data를 가져올 수 있는 API 호출 기능 구현
    ```Swift
-   func fetchCovidOverview(
-     completionHandler: (Result<CityCovidOverview, Error>) -> Void
-   ) { }
-   ``` 
-   * API를 요청하고 Server에서 JSON Data를 응답받거나 요청에 실패하였을 때 completion 클로저 Handler를 호출한다.
+   func fetchCovidOverview(completionHandler: (Resutl<CityCovidOverview, Error>) -> Void) {
+     let url = "https://api.corona-19.kr/korea/country/new/"
+     let param = [
+       "serviceKey": "...."
+     ]
+   }
+   ```
+   * API를 요청하고 Server에서 JSON Data를 응답받거나 요청에 실패하였을 때 completion Closure Handler를 호출한다.
    * 해당 클로저를 정의하는 곳에 응답받은 데이터를 전달하는 기능 구현
    * Result의 첫 번째 제네릭에 요청이 성공하면 CiryCovidOverview 열거형 연관값을 전달받을 수 있도록 
    * Result의 두 번째 제네릭에 요청이 실패하거나 에러 사항일 경우 Error객체 열거형 연관값으러 전달받을 수 있도록
