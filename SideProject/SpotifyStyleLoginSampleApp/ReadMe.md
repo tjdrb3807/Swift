@@ -1,7 +1,88 @@
 # Spotify 스타일 로그인 화면 구현하기
 
-## UI
+## UI 구성
 <img src="img/img01.png" width=600 height=400>
+
+1. Storyboard 에서 Navigation View Controller 생성
+   * Initial View Controller 지정
+2. View Controller 생성
+   * Navigation View Controller의 Root View Controller로 지정
+   * class LoginViewController: UIViewController 생성
+   * Class: LoginViewController, Storyboard ID: LoginViewController
+   * Background Color: Black
+3. LoginViewController의 Navigation Bar 삭제 기능 구현
+   * LoginViewController.viewWillApepear 설정 
+4. Image View, Label 생성후 Vertical Stack View 설정
+   * Image
+     * Image: music.house.fill
+     * Tint: White Color
+     * Width: 70, Height: 80 
+   * Label
+     * text: 내 마음에 꼭 드는 또 다른\n플레이리스트를\n발견해보세요.
+     * Color: White Color
+     * Font StyleL Bold, Font Size: 31
+     * Alignmet: Center
+     * Lines: 3
+   * Stack View
+     * Alignment: Center
+     * Distribution: Fill 
+     * Spacing: 0
+     * Auto Layout
+       * Cneter Horizontally in Safe Area
+       * Center Vertically in Sage Area
+       * Center Y Multiplier: 4/5 
+5. Button 3개 생성후 Vertical Stack View 설정
+   * Button 
+     * Font Style: Bole
+     * Font Size: 18
+     * Font Color: White Color
+     * Auto Layout Height: 60 
+     * 각 버튼의 Leading, Trailing 제약조건 추가
+   * Stack View
+     * Alignment: Center
+     * Distribution: Fill Equally
+     * Spacing: 15
+     * Auto layout
+       * Cneter Horizontally in Safe Area
+       * Leading: 30, Trailing: 30
+       * 위쪽에 위치하는 Stack View 와 Vertical Spacing
+       * Constant: 60 
+   * 각 버튼의 Layer Border 설정
+     * Outlet 변수 설정
+     * LoginViewController.viewDidLoad()에 기능 구현
+       * 세가지 버튼 모두 동일한 형태의 테두리 UI를 지정할 것 이므로 forEach 문을 이용해서 반목을 줄인다.
+6. View Controller 생성
+   * Class: EmailViewController
+   * Storyboard ID: EmailViewController
+   * LoginViewController.emailLoginButton의 Action Segue: show
+   * Navigation Bar title: 이메일/비밀번호 입력하기
+   * Background Color: Black
+   * EmailViewController의 Navigation Bar 표시 기능 구현
+7. EmailViewController에 Lable 2개, TextField 2개 생성후 Vertical Stack View 설정 
+   * emailTextField.Keyboard Type: E-mail Arrdess
+   * emailTextField.Height: 50
+   * passwordField.Secure Text Entry 설정
+   * passwordFiedl.Height: 50
+   * Stack View
+     * Alignment: Fill
+     * Distribution: Equal Spacing
+     * Spacing: 20
+     * Auto Layout
+       * Cneter Horizontally in Safe Area
+       * Leading: 30, Trailing: 30
+       * Top Space to Safe Area.Constnat: 70 
+8. Error Message를 위한 Label을 Vertical Stack View에 추가
+   * Font Color: Red
+   * Lines: 0  
+9. Button 추가
+   * Width: 100, Height: 60  
+   * Cneter Horizontally in Safe Area 
+   * 버튼 Layer Border 설정
+     * EmailViewController.viewDidLoad()에 기능 구현
+   * 버튼 비활성화 기능 구현
+
+
+
 
 ## OAuth
 * 사용자 인증 방식에 대한 업계 표준

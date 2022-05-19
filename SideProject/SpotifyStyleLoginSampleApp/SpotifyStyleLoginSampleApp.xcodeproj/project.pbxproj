@@ -9,21 +9,23 @@
 /* Begin PBXBuildFile section */
 		4591BE2A283604FC0010542D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4591BE29283604FC0010542D /* AppDelegate.swift */; };
 		4591BE2C283604FC0010542D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4591BE2B283604FC0010542D /* SceneDelegate.swift */; };
-		4591BE2E283604FC0010542D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4591BE2D283604FC0010542D /* ViewController.swift */; };
 		4591BE31283604FC0010542D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4591BE2F283604FC0010542D /* Main.storyboard */; };
 		4591BE33283604FC0010542D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4591BE32283604FC0010542D /* Assets.xcassets */; };
 		4591BE36283604FC0010542D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4591BE34283604FC0010542D /* LaunchScreen.storyboard */; };
+		4591BE3E283607D30010542D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4591BE3D283607D30010542D /* LoginViewController.swift */; };
+		4591BE40283618DA0010542D /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4591BE3F283618DA0010542D /* EmailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4591BE26283604FC0010542D /* SpotifyStyleLoginSampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpotifyStyleLoginSampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4591BE29283604FC0010542D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4591BE2B283604FC0010542D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		4591BE2D283604FC0010542D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4591BE30283604FC0010542D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4591BE32283604FC0010542D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4591BE35283604FC0010542D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4591BE37283604FC0010542D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4591BE3D283607D30010542D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		4591BE3F283618DA0010542D /* EmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,11 +60,12 @@
 			children = (
 				4591BE29283604FC0010542D /* AppDelegate.swift */,
 				4591BE2B283604FC0010542D /* SceneDelegate.swift */,
-				4591BE2D283604FC0010542D /* ViewController.swift */,
 				4591BE2F283604FC0010542D /* Main.storyboard */,
 				4591BE32283604FC0010542D /* Assets.xcassets */,
 				4591BE34283604FC0010542D /* LaunchScreen.storyboard */,
 				4591BE37283604FC0010542D /* Info.plist */,
+				4591BE3D283607D30010542D /* LoginViewController.swift */,
+				4591BE3F283618DA0010542D /* EmailViewController.swift */,
 			);
 			path = SpotifyStyleLoginSampleApp;
 			sourceTree = "<group>";
@@ -138,9 +141,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4591BE2E283604FC0010542D /* ViewController.swift in Sources */,
+				4591BE3E283607D30010542D /* LoginViewController.swift in Sources */,
 				4591BE2A283604FC0010542D /* AppDelegate.swift in Sources */,
 				4591BE2C283604FC0010542D /* SceneDelegate.swift in Sources */,
+				4591BE40283618DA0010542D /* EmailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
