@@ -1,5 +1,7 @@
+# Spotify 스타일 로그인 화면 구현하기
+
 ## UI
-<img src="img/img01.png">
+<img src="img/img01.png" width=600 height=400>
 
 ## OAuth
 * 사용자 인증 방식에 대한 업계 표준
