@@ -112,4 +112,8 @@
 ## firebase 연결하기
 * iOS 연걸
   * Apple 번들 ID 등록
-    * XCode Project. TARGETS 
+    * XCode Project -> TARGETS -> Bundle Identifier
+  * GoogleService-Info.plist 다운 및 xCode 등록
+  * Cocoapods를 이용한 Firebase SDK 추가 
+   
+  <img src="img/img02.png" width =500 height=300> 
