@@ -9,25 +9,23 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
-    
-    @IBOutlet weak var emialLoginButton: UIButton!
+    @IBOutlet weak var emailLoginButton: UIButton!
     @IBOutlet weak var googleLoginButton: UIButton!
     @IBOutlet weak var appleLoginButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Button Layer 설정
-        [emialLoginButton, googleLoginButton, appleLoginButton] .forEach {
+        [emailLoginButton, googleLoginButton, appleLoginButton] .forEach {
             $0?.layer.borderWidth = 1
             $0?.layer.borderColor = UIColor.white.cgColor
-            $0?.layer.cornerRadius = 3.0
+            $0?.layer.cornerRadius = 30
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //Navigation Bar 숨김
+        //Navigation Bar 숨기
         navigationController?.navigationBar.isHidden = true
     }
     

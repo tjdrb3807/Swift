@@ -33,7 +33,7 @@
        * Center Y Multiplier: 4/5 
 5. Button 3개 생성후 Vertical Stack View 설정
    * Button 
-     * Font Style: Bole
+     * Font Style: Bold
      * Font Size: 18
      * Font Color: White Color
      * Auto Layout Height: 60 
