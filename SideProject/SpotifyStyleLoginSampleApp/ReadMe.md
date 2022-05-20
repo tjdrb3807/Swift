@@ -87,12 +87,27 @@
 
 ---
 
-## 기능 구현
+## 이메일/비밀번호 로그인, 로그아웃 기능 구현
 1. Firebase Authentication에 전달할 emailTextField와 passwordTextField에 입력된 Text 값을 받아오기 위한 TextFiledDelegate 설정
    * textFieldShouldReturn(): email, password 입력이 끝난 후 Return Button 이 눌렸을 때 Keyboard가 내려가는 기능 구현
    * textFiledDidEndEditing: emailTextField, passwordTextField에 값이 채워졌을 때 nextButton 활성화 기능 구현
      * 두 Text Field에 모두 Text 값이 있을 때 활성화 조건
 2. EmailViewController에 처음 들어왔을 때 커서가 emailTextFiled에 위치하도록 기능 구현
+3. Firebase 이메일/비밀번호 인증 기능 구현
+   * Firebas.Auth SDK에서 제공하는 createUser를 통해서 Firebase 인증 플랫폼에 데이터 전달
+   * closer 내에서는 결과값을 받게 된다.
+   * 계정 생성이 정상적으로 됐다면 MainViewController로 화면을 이동(3-1)
+   * 로그인한 이메일이 MainViewController에 들어섰을 때 표현될 기능 구현(3-2)
+   * 동일한 계정이 계속 가입되는 것을 방지하는 기능 구현(3-3)
+     * 같은 이메일로 다시 신규 사용자 생성 코드를 타게되면 17007 error 객체 발생
+     * Firebase Auth를 통한 로그인을 할 수 있는 SignIn Closer 추가
+   * 로그아웃 기능 구현(3-4)
+     * tapLogoutButton Action 함수에 SignOut 함수 추가
+       * 해당 함수는 Error 처리를 위한 throw 함수 이므로 do-tryCatch문을 사용하여 처리한다. 
+
+---
+
+## Google 로그인, 로그아웃 기능 구현
 
 ---
 
@@ -117,3 +132,8 @@
   * Cocoapods를 이용한 Firebase SDK 추가 
    
   <img src="img/img02.png" width =500 height=300> 
+  
+  * Firebase 초기화 선언
+    * AppDelegate -> import Friebase
+    * AppDelegate -> application.FirebaseApp.configure()
+

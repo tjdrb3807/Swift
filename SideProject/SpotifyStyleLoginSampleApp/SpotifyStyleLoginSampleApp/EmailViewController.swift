@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class EmailViewController: UIViewController {
 
@@ -34,7 +35,50 @@ class EmailViewController: UIViewController {
         //Navigation Bar 표시
         navigationController?.navigationBar.isHidden = false
     }
+    
     @IBAction func tapNextButton(_ sender: UIButton) {
+        //(기능 03)
+        let email = emailTextField.text ?? ""
+        let password = passwordTextField.text ?? ""
+        
+        //신규 사용자 생성
+        Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                let code = (error as NSError).code
+                switch code {
+                case 17007:  //이미 가입한 계정일 떄
+                    //(기능03_03)
+                    self.loginUser(withEmail: email, password: password)
+                    
+                default:
+                    self.errorMessageLabel.text = error.localizedDescription
+                }
+            } else {
+                //(기능03-01)
+                self.showMainViewController()
+            }
+        }
+    }
+    
+    private func showMainViewController() {
+//        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        guard let mainViewController = self.storyboard?.instantiateViewController(identifier: "MainViewController") else { return }
+        mainViewController.modalPresentationStyle = .fullScreen
+        navigationController?.show(mainViewController, sender: nil)
+    }
+    
+    private func loginUser(withEmail email: String, password: String) {
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] _, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                self.errorMessageLabel.text = error.localizedDescription
+            } else {
+                self.showMainViewController()
+            }
+        }
     }
 }
 
@@ -46,7 +90,7 @@ extension EmailViewController: UITextFieldDelegate {
         return false
     }
     
-    //(기능 02_02_
+    //(기능 02_02)
     func textFieldDidEndEditing(_ textField: UITextField) {
         let isEmailEmpty = emailTextField.text == ""
         let isPasswordEmpty = passwordTextField.text == ""

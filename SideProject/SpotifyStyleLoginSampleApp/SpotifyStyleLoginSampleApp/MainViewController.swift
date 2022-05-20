@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class MainViewController: UIViewController {
 
@@ -21,8 +22,24 @@ class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         //Navigagion Bar 숨김
         navigationController?.navigationBar.isHidden = true
+        
+        //(기능03_02)
+        let email = Auth.auth().currentUser?.email ?? "고객"
+        welcomeLabel.text = """
+        환영합니다.
+        \(email)님
+        """
     }
     @IBAction func tapLogoutButton(_ sender: UIButton) {
-        self.navigationController?.popToRootViewController(animated: true)
+        //(기능03_04)
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            //error가 발생하지 않을 경우 pop
+            self.navigationController?.popToRootViewController(animated: true)
+        } catch let signOutError as NSError {
+            //error가 발생한 경우
+            print("ERROR: singout \(signOutError.localizedDescription)")
+        }
     }
 }
