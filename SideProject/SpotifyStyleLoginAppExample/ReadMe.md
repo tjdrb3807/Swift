@@ -123,6 +123,17 @@
 4. AppDeleagte 에서 import GoogleSignIn, SignIn Delegate Protocol 구현 추가
 5. AppDeleaget에 OpenURL 메서드를 구현
    * Google의 인증 프로세스가 끝날 때 App이 수신하는 URL을 처리하는 역할 
+
+6. tapGoogleLoginButton Action 함수 정의
+   * 기존 googleLoginButton의 Type을 GIDSignInButton으로 변경
+     * `GIDSignInButton`: UIButton을 상속하면서 Google Login을 실행시켜주는 GoogleSignIn SDK의 객체
+   * Google SignIn을 진행하지 귀한 Google SignIn WebView 와 해당 View를 띄울 ViewController 선언이 필요 
+     * LoginViewController.viewWillAppere에 선언
+
+---
+
+## Apple 로그인
+
  
 
 ---

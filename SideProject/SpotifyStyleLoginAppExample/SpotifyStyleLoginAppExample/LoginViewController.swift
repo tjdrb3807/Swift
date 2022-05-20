@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import Firebase
+import GoogleSignIn
 
 class LoginViewController: UIViewController {
 
     @IBOutlet weak var emailLoginButton: UIButton!
-    @IBOutlet weak var googleLoginButton: UIButton!
+    @IBOutlet weak var googleLoginButton: GIDSignInButton!
     @IBOutlet weak var appleLoginButton: UIButton!
     
     override func viewDidLoad() {
@@ -25,8 +27,8 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //Navigation Bar 숨기
-        navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = true //Navigation Bar 숨기
+        
     }
     
     @IBAction func tapEmailLoginButton(_ sender: UIButton) {

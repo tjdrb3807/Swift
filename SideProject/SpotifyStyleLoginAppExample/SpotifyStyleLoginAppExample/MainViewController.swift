@@ -6,23 +6,35 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class MainViewController: UIViewController {
     @IBOutlet weak var welcomeLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Pop Gesture 기능 삭제
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false   //Pop Gesture 기능 삭제
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //Navigation Bar 숨기
-        navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = true   //Navigation Bar 숨기
+        
+        let email = Auth.auth().currentUser?.email ?? "고객"
+        welcomeLabel.text = """
+        환영합니다.
+        \(email)님
+        """
     }
     
     @IBAction func tapLogoutButton(_ sender: UIButton) {
-        navigationController?.popToRootViewController(animated: true)
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            navigationController?.popToRootViewController(animated: true)  //error가 발생하지 않은 경우 실행
+        } catch let signOutError as NSError {
+            print("ERROR: signOut \(signOutError.localizedDescription)")
+        }
+            
     }
 }
