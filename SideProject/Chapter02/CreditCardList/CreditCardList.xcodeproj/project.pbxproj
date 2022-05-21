@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4526483328379C8D0051A651 /* CardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4526483228379C8D0051A651 /* CardDetailViewController.swift */; };
+		454309522838A83100376610 /* money.json in Resources */ = {isa = PBXBuildFile; fileRef = 454309512838A83100376610 /* money.json */; };
+		454309542838E04C00376610 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 454309532838E04C00376610 /* GoogleService-Info.plist */; };
 		45D4C29D28378CD400017367 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D4C29C28378CD400017367 /* AppDelegate.swift */; };
 		45D4C29F28378CD400017367 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D4C29E28378CD400017367 /* SceneDelegate.swift */; };
 		45D4C2A428378CD400017367 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45D4C2A228378CD400017367 /* Main.storyboard */; };
@@ -22,6 +24,8 @@
 
 /* Begin PBXFileReference section */
 		4526483228379C8D0051A651 /* CardDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailViewController.swift; sourceTree = "<group>"; };
+		454309512838A83100376610 /* money.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = money.json; sourceTree = "<group>"; };
+		454309532838E04C00376610 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		45D4C29928378CD400017367 /* CreditCardList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CreditCardList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45D4C29C28378CD400017367 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45D4C29E28378CD400017367 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -87,9 +91,11 @@
 				45D4C2A528378CD500017367 /* Assets.xcassets */,
 				45D4C2A728378CD500017367 /* LaunchScreen.storyboard */,
 				45D4C2AA28378CD500017367 /* Info.plist */,
+				454309532838E04C00376610 /* GoogleService-Info.plist */,
 				45D4C2B228378EBF00017367 /* Credit.swift */,
 				45D4C2B42837900700017367 /* CardListCell.swift */,
 				45D4C2B52837900700017367 /* CardListCell.xib */,
+				454309512838A83100376610 /* money.json */,
 			);
 			path = CreditCardList;
 			sourceTree = "<group>";
@@ -165,8 +171,10 @@
 			files = (
 				45D4C2A928378CD500017367 /* LaunchScreen.storyboard in Resources */,
 				45D4C2A628378CD500017367 /* Assets.xcassets in Resources */,
+				454309522838A83100376610 /* money.json in Resources */,
 				45D4C2A428378CD400017367 /* Main.storyboard in Resources */,
 				45D4C2B72837900700017367 /* CardListCell.xib in Resources */,
+				454309542838E04C00376610 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
