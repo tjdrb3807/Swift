@@ -1,7 +1,10 @@
 # UICollectionView
-이번 Project에서 가장 메인이 되는 Layout형태로 UICollectionView에 대하여 먼저 알아보도록 한다.   
-UICollectionView는 `유연하게 변경 가능한 Layout을 사용하여 특정 타입 형태로 정렬된 데이터 집합을 표시하는 방법이다.`   
-UICollectionView의 가장 일반적인 용도로는 항목을 격자와 같은 배열로 표시하는 것 이지만, iOS의 CollectionView는 행과 열의 나열 뿐만 아니라 다양한 배열 구현을 가능하게 한다.    
+
+## 정의   
+`유연하게 변경 가능한 Layout을 사용하여 특정 타입 형태로 정렬된 데이터 집합을 표시하는 방법`   
+> UICollectionView의 가장 일반적은 용도는 항목을 격자와 같은 배열로 표시하는 것이지만,   
+> iOS의 UICollectionView는 행과 열의 나열 뿐만 아니라 다양한 배열 구현을 가능하게 한다.   
+
 
 UICollectionView는 Data와 해당 Data 를 표시하는 시각적 요소를 엄격하게 구분하고 있다.   
 즉, 데이터를 어떻게 관리할지 또 그러한 데이터를 어떻게 나타낼지 모두 별도로 고려해서 개발해야 한다.   
