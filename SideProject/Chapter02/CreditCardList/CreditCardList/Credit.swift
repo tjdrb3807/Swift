@@ -17,9 +17,9 @@ struct CreditCard: Codable {
 }
 
 struct PromotionDetail: Codable {
-    let compayName: String
-    let amount: Int
+    let companyName: String
     let period: String
+    let amount: Int
     let condition: String
     let benefitCondition: String
     let benefitDetail: String

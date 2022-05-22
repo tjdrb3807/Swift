@@ -11,7 +11,7 @@ import FirebaseDatabase
 
 class CardListViewController: UITableViewController {
     
-    var ref: DatabaseReference!  //Firebase Database Reference
+    var ref: DatabaseReference!  //Firebase Realtime Database Reference
     
     var creditCardList: [CreditCard] = []
 
@@ -27,7 +27,6 @@ class CardListViewController: UITableViewController {
         //FirebaseDatabase Data Read
         ref.observe(.value) { [weak self] snapshot in
             guard let value = snapshot.value as? [String: [String: Any]] else { return }
-            
             //JSON Decoding
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: value)
@@ -42,7 +41,6 @@ class CardListViewController: UITableViewController {
             } catch let error {
                 print("ERROR JSON Parsing \(error.localizedDescription)")
             }
-            
         }
     }
     
@@ -68,8 +66,8 @@ class CardListViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //상제 화면 전달
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        //상세 화면 전달
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let detailViewController = storyboard.instantiateViewController(identifier: "CardDetailViewController") as? CardDetailViewController else { return }
         detailViewController.promotionDetail = creditCardList[indexPath.row].promotionDetail
         self.show(detailViewController, sender: nil)

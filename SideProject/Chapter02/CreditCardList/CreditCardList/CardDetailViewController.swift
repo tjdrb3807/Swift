@@ -26,7 +26,7 @@ class CardDetailViewController: UIViewController {
         
         // money Lottie Animation 구현
         let animationView = AnimationView(name: "money") //Lottie가 가져올 JSON 파일명을 파라미터로 넘겨준다.
-        lottieView.contentMode = .scaleAspectFill
+        lottiaeView.contentMode = .scaleAspectFill
         lottieView.addSubview(animationView)
         animationView.frame = lottieView.bounds
         animationView.loopMode = .loop //단순 반복
@@ -39,7 +39,7 @@ class CardDetailViewController: UIViewController {
         guard let detail = promotionDetail else { return }
         
         titleLabel.text = """
-        \(detail.compayName)카드 쓰면
+        \(detail.companyName)카드 쓰면
         \(detail.amount)만원 드려요.
         """
         
