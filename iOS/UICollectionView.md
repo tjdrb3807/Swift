@@ -2,24 +2,36 @@
 
 ## 정의   
 `유연하게 변경 가능한 Layout을 사용하여 특정 타입 형태로 정렬된 데이터 집합을 표시하는 방법`   
-> UICollectionView의 가장 일반적은 용도는 항목을 격자와 같은 배열로 표시하는 것이지만,   
+> UICollectionView의 가장 일반적인 용도는 항목을 격자와 같은 배열로 표시하는 것이지만,   
 > iOS의 UICollectionView는 행과 열의 나열 뿐만 아니라 다양한 배열 구현을 가능하게 한다.   
 
 > UICollectionView는 Data와 해당 Data를 표시하는 시각적 요소를 엄격하게 구분한다.   
-> 즐, 데이터를 어떻게 관리할지 또 그러한 데이터를 어떻게 나타낼지 모두 별도로 고려해서 개발해야 한다.   
+> 즉, 데이터를 어떻게 관리할지 또 그러한 데이터를 어떻게 나타낼지 모두 별도로 고려해서 개발해야 한다.   
+> 동시에 사용자에게 어떠한 화면을 보여줄 것인가에 대한 View를 가져와서 화면에 배치하는 모든 작업 또한 개발되어야 한다.   
 
-UICollectionView는 Data와 해당 Data 를 표시하는 시각적 요소를 엄격하게 구분하고 있다.   
-즉, 데이터를 어떻게 관리할지 또 그러한 데이터를 어떻게 나타낼지 모두 별도로 고려해서 개발해야 한다.   
-동시에 사용자에게 어떠한 화면을 보여줄지에 대한 View를 가져와서 화면에 배치하는 모든 작업 또한 개발되어야 한다.   
-Viwe를 어떻게 배치할지 각각의 View는 어떤 속성을 갖는지 지정할 수 있는 Layout객체와 함께 View작업을 수행한다.   
-따라서 Data 영역 Layout영역은 각각 분리가 되어서 각자의 역할에 맞는 정보를 제공하고 UICollectionView는 이러한 두 구분을 종합해서 최종 형태를 구축하게 된다.    
+> View를 어떻게 배치할지, 각각의 View는 어떤 속성을 갖는지 지정할 수 있는 `Layout`객체와 할께 View 작업을 수행한다.   
+
+`따라서 Data 영역, Layout영역은 각각 분리가 되어서 각자의 역할에 맞는 정보를 제공하고 UICollectionView는 이러한 두 구분을 종합하여 최종 형태를 구축하게 된다.`   
+ 
+## UICollectionView를 구현하기 위한 Class와 Protocol    
+
+<img src="img/img01.png" width=500 height=300>
+
+> 위의 이미지는 UIKit에서 제공하는 UICollectionView 관련 Class와 Protocol을 각각의 역할에 따라 정리한 표이다.   
+> 대부분의 클래스는 하위 클래스화 할 필요 없이 있는 그대로 사용하도록 설계되었기 때문에 상대적으로 아주 적은 코드로 복잡한 UI를 구현할 수 있다.   
+
+### Top-level Containment and Management
+
+최상위 레벨에서 관리 역학을 하는 `UICollectionView`와 `UICollectionViewController` 가 존재한다.   
+* UIColletionView Class
+  * UICollectionView Class는 
 
 
-UICollectionView는 Data가 화면에 배열되고 표시되는 방식과 표시되는 Data를 분리하도록 디자인 되어있다.   
-표시할 Data를 엄격하게 관리하는 동시에 시각적인 표현은 다양한 객체에 의해서 관리된다.   
-(pdf에서 이미지 첨부)
-UIKit에서 제공하는 UICollectionView 관련 Class 와 Protocol 을 각각의 역할에 따라 정리한 표   
-대부분의 클래스는 하위 클래스화할 필요 없이 있는 그대로 사용하도록 설계되었기 때문에 상대적으로 아주 적은 코드로도 복작한 UI를 구현할 수 있게 되어있다.   
+
+
+
+
+
 
 * Top-level Containmnet ans Management   
 최상위 레벨에서 관리 역할을 하는 UICollectionView와 CollectionViewController가 존재한다.   
