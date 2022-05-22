@@ -22,23 +22,20 @@
 
 ### Top-level Containment and Management
 
+<img src="img/img02.png" width=500 height=500>
+
 최상위 레벨에서 관리 역학을 하는 `UICollectionView`와 `UICollectionViewController` 가 존재한다.   
 * UIColletionView Class
-  * UICollectionView Class는 
+  * UICollectionView 클래스 객체는 CollectionView가 갖는 Contents가 보여지는 영역을 정의한다.  
+  * UIScrollView를 상속받기 때문에 이후에 다른 Layout객체에서 수신하는 Layout정보를 기반으로 데이터를 쉽게 표시할 수 있도록 도와준다.    
+* UICollectionViewController Protocol
+  * CollectionView를 ViewController 수준에서 관리할 수 있게 도와준다.   
+  > UITableView와 UITableViewController와 같은 관계라 생각하면 된다.    
 
 
 
 
 
-
-
-
-* Top-level Containmnet ans Management   
-최상위 레벨에서 관리 역할을 하는 UICollectionView와 CollectionViewController가 존재한다.   
-UICollectionView 객체는 CollectionView가 갖는 Contents가 보여지는 영역을  어떻게 할지 정의한다.   
-이 클래스는 UIScrollView를 상속하기 때문에 이후에 다룰 Layout객체에서 수신하는 Layout정보를 기반으로 데이터를 쉽에 표시할 수 있도록 도와준다.    
-UICollectionViewController는 이러한 CollectionView를 ViewController 수준에서 관리할 수 있게 해준다.
-UITableView와 UITableViewController와 같은 관계라 생각하면 된다. 
 
 * Content Management   
 DataSource는 UICollectionView와 연결된 가장 중요한 객체로서 반드시 제공해야 하는 객체이다.   
