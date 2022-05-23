@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		451508F6283B36140080894C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 451508F5283B36140080894C /* SnapKit */; };
 		4558796B283A38080092BBED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4558796A283A38080092BBED /* AppDelegate.swift */; };
 		4558796D283A38080092BBED /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4558796C283A38080092BBED /* SceneDelegate.swift */; };
-		4558796F283A38080092BBED /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4558796E283A38080092BBED /* ViewController.swift */; };
 		45587972283A38080092BBED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45587970283A38080092BBED /* Main.storyboard */; };
 		45587974283A38080092BBED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45587973283A38080092BBED /* Assets.xcassets */; };
 		45587977283A38080092BBED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45587975283A38080092BBED /* LaunchScreen.storyboard */; };
@@ -26,7 +26,6 @@
 		45587967283A38080092BBED /* NetflixStyleSampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetflixStyleSampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4558796A283A38080092BBED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4558796C283A38080092BBED /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		4558796E283A38080092BBED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		45587971283A38080092BBED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		45587973283A38080092BBED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		45587976283A38080092BBED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -43,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				451508F6283B36140080894C /* SnapKit in Frameworks */,
 				45587982283A3CF60092BBED /* SnapKit in Frameworks */,
 				45587984283A3CF60092BBED /* SnapKit-Dynamic in Frameworks */,
 			);
@@ -72,7 +72,6 @@
 			children = (
 				4558796A283A38080092BBED /* AppDelegate.swift */,
 				4558796C283A38080092BBED /* SceneDelegate.swift */,
-				4558796E283A38080092BBED /* ViewController.swift */,
 				45587970283A38080092BBED /* Main.storyboard */,
 				45587973283A38080092BBED /* Assets.xcassets */,
 				45587975283A38080092BBED /* LaunchScreen.storyboard */,
@@ -105,6 +104,7 @@
 			packageProductDependencies = (
 				45587981283A3CF60092BBED /* SnapKit */,
 				45587983283A3CF60092BBED /* SnapKit-Dynamic */,
+				451508F5283B36140080894C /* SnapKit */,
 			);
 			productName = NetflixStyleSampleApp;
 			productReference = 45587967283A38080092BBED /* NetflixStyleSampleApp.app */;
@@ -136,6 +136,7 @@
 			mainGroup = 4558795E283A38080092BBED;
 			packageReferences = (
 				45587980283A3CF60092BBED /* XCRemoteSwiftPackageReference "SnapKit" */,
+				451508F4283B36140080894C /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 45587968283A38080092BBED /* Products */;
 			projectDirPath = "";
@@ -165,7 +166,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4558796F283A38080092BBED /* ViewController.swift in Sources */,
 				4558797F283A391A0092BBED /* HomeViewController.swift in Sources */,
 				4558798A283B22C70092BBED /* ContentCollectionViewCell.swift in Sources */,
 				4558796B283A38080092BBED /* AppDelegate.swift in Sources */,
@@ -391,6 +391,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		451508F4283B36140080894C /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
 		45587980283A3CF60092BBED /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -402,6 +410,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		451508F5283B36140080894C /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 451508F4283B36140080894C /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
 		45587981283A3CF60092BBED /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 45587980283A3CF60092BBED /* XCRemoteSwiftPackageReference "SnapKit" */;

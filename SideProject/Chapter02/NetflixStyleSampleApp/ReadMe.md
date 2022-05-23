@@ -70,3 +70,10 @@
 * Haeder는 Cell이 아니므로 forSupplementaryViewOfKind로 CollectionView에 알려주어야 한다.
 
 <img src="img/img12.png" width=600 height=200>
+
+---
+
+## 11. 배너 구현하기 
+  * Swift UI Preview Provider 추가
+    * CollectionView와 같은 복잡한 Layout을 개발할떄는 개발자가 적용한 설정이 적절한지 수시소 시뮬레이터를 돌리게 된다.
+    * Stroyboard를 사용하지 않고 Code로만 UI를 작성할경우 유용하다. 
