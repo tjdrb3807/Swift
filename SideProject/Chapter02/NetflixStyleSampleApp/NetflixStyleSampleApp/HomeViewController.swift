@@ -31,6 +31,7 @@ class HomeViewController: UICollectionViewController {
         //CollectionView Item(Cell) Setting
         collectionView.register(ContentCollectionViewCell.self, forCellWithReuseIdentifier: "ContentCollectionViewCell")
         collectionView.register(ContentCollectionViewCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "ContentCollectionViewCell")
+        collectionView.collectionViewLayout = self.layout()
     }
     
     func getContent() -> [Content] {
@@ -40,6 +41,64 @@ class HomeViewController: UICollectionViewController {
         
         return list
     }
+    
+    //각각의 Section Type에 대한 UICollectionViewLayout 생성
+    private func layout() -> UICollectionViewLayout {
+        return UICollectionViewCompositionalLayout { [weak self] sectionNumber, enviromnet -> NSCollectionLayoutSection? in
+            guard let self = self else { return nil}
+            
+            switch self.contents[sectionNumber].sectionType {
+            case .basic:
+                return self.createBasicTypeSeciont()
+                
+            default:
+                return nil
+            }
+        }
+    }
+    
+    private func createBasicTypeSeciont() -> NSCollectionLayoutSection {
+        //item
+        let size = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(0.3),
+            heightDimension: .fractionalHeight(0.75))
+        let item = NSCollectionLayoutItem(layoutSize: size)
+        item.contentInsets = .init(top: 10, leading: 5, bottom: 0, trailing: 5)
+        
+        //group
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(0.9),
+            heightDimension: .estimated(200))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize
+                                                       , subitem: item
+                                                       , count: 3)
+        
+        //section
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
+        
+        let sectionHeader = self.createSectionHaeder()
+        section.boundarySupplementaryItems = [sectionHeader]
+        
+        return section
+    }
+    
+    //Section Header Layout Setting
+    private func createSectionHaeder() -> NSCollectionLayoutBoundarySupplementaryItem {
+        //Section Header Size
+        let layoutSectionHeaderSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(30))
+        
+        //Section Header Layout
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: layoutSectionHeaderSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top)
+        
+        return sectionHeader
+    }
 }
 
 //UICollectionView DatatSource, Delegate Setting
@@ -47,13 +106,17 @@ extension HomeViewController {
     
     //Section당 보여질 Cell 개수
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 1  //첫 번째 Section에서는 하나의 Cell만 표시
-            
-        default:
-            return contents[section].contentItem.count
+        //임시 설정
+        if contents[section].sectionType == .basic {
+            switch section {
+            case 0:
+                return 1  //첫 번째 Section에서는 하나의 Cell만 표시
+                
+            default:
+                return contents[section].contentItem.count
+            }
         }
+        return 0
     }
     
     //CollectionView Cell Setting

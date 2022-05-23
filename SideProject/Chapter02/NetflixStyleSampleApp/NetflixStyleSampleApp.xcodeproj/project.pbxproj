@@ -17,6 +17,7 @@
 		45551879283B5A3800625148 /* ContentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45551878283B5A3800625148 /* ContentCollectionViewCell.swift */; };
 		4555187B283B5A4600625148 /* ContentCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4555187A283B5A4600625148 /* ContentCollectionViewHeader.swift */; };
 		4555187D283B5A4A00625148 /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4555187C283B5A4A00625148 /* Content.swift */; };
+		45558FC6283B660200B58FCB /* Content.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45558FC5283B660200B58FCB /* Content.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		45551878283B5A3800625148 /* ContentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCollectionViewCell.swift; sourceTree = "<group>"; };
 		4555187A283B5A4600625148 /* ContentCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCollectionViewHeader.swift; sourceTree = "<group>"; };
 		4555187C283B5A4A00625148 /* Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
+		45558FC5283B660200B58FCB /* Content.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Content.plist; sourceTree = "<group>"; };
 		45B29F231959067B33CDC6CB /* Pods-NetflixStyleSampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetflixStyleSampleApp.debug.xcconfig"; path = "Target Support Files/Pods-NetflixStyleSampleApp/Pods-NetflixStyleSampleApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,6 +81,7 @@
 				4555187C283B5A4A00625148 /* Content.swift */,
 				4555186D283B59D800625148 /* LaunchScreen.storyboard */,
 				45551870283B59D800625148 /* Info.plist */,
+				45558FC5283B660200B58FCB /* Content.plist */,
 			);
 			path = NetflixStyleSampleApp;
 			sourceTree = "<group>";
@@ -89,7 +92,6 @@
 				45B29F231959067B33CDC6CB /* Pods-NetflixStyleSampleApp.debug.xcconfig */,
 				02DCC366FC071B56B9ECD837 /* Pods-NetflixStyleSampleApp.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -163,6 +165,7 @@
 			files = (
 				4555186F283B59D800625148 /* LaunchScreen.storyboard in Resources */,
 				4555186C283B59D800625148 /* Assets.xcassets in Resources */,
+				45558FC6283B660200B58FCB /* Content.plist in Resources */,
 				4555186A283B59D700625148 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

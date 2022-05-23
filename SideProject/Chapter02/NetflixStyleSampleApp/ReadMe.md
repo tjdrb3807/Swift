@@ -74,6 +74,34 @@
 ---
 
 ## 11. 배너 구현하기 
+
+<img src="img/img13.png" width=600 height=300>
+
   * Swift UI Preview Provider 추가
     * CollectionView와 같은 복잡한 Layout을 개발할떄는 개발자가 적용한 설정이 적절한지 수시소 시뮬레이터를 돌리게 된다.
     * Stroyboard를 사용하지 않고 Code로만 UI를 작성할경우 유용하다. 
+
+
+## 12. 기본 compositional Layout 설정
+
+<img src="img/img14.png" width=600 height=350>
+
+## 13. Section별로 다른 Layout을 적용할 것이기 때문에, 그에 만제 클로저를 통해서 분기를 치는 기능 구현
+
+<img src="img/img15.png" width=600 height=250>
+
+* CollectionView.viewDidLoad()에 추가
+  ```Swift
+  collectionView.collectionViewLayout = self.layout()
+  ``` 
+
+## 14. Section Header Layout 설정 
+
+<img src="img/img16.png" width=600 height=250>
+
+* createBasicTypeSection()에 추가
+
+<img src="img/img17.png" width=600 height=40>
+
+* Preview를 보기위햇 numberOfSection 수정
+* 
